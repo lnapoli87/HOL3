@@ -150,7 +150,7 @@
         <!--New File-->
         <scene sceneID="zGr-Sp-877">
             <objects>
-                <viewController title="New File" id="G2O-6N-Gtq" userLabel="New File" sceneMemberID="viewController">
+                <viewController title="New File" id="G2O-6N-Gtq" userLabel="New File" customClass="NewFileViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="JVn-Id-9rn"/>
                         <viewControllerLayoutGuide type="bottom" id="ZaT-tH-elh"/>
@@ -171,7 +171,7 @@
         <!--File Details-->
         <scene sceneID="ndQ-pJ-IV9">
             <objects>
-                <viewController title="File Details" id="hxK-Xp-BVM" userLabel="File Details" sceneMemberID="viewController">
+                <viewController title="File Details" id="hxK-Xp-BVM" userLabel="File Details" customClass="FileDetailsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="xiK-PK-W5z"/>
                         <viewControllerLayoutGuide type="bottom" id="6SQ-nj-fgL"/>

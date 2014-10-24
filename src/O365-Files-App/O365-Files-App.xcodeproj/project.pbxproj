@@ -10,6 +10,8 @@
 		D90A56DE19FA6FFC00F4F476 /* office365.png in Resources */ = {isa = PBXBuildFile; fileRef = D90A56DD19FA6FFC00F4F476 /* office365.png */; };
 		D90A56E419FA73F100F4F476 /* FileListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D90A56E319FA73F100F4F476 /* FileListViewController.m */; };
 		D90A56E719FA741E00F4F476 /* FileListCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D90A56E619FA741E00F4F476 /* FileListCellTableViewCell.m */; };
+		D90A571619FA9F0200F4F476 /* NewFileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D90A571519FA9F0200F4F476 /* NewFileViewController.m */; };
+		D90A571919FA9F1B00F4F476 /* FileDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D90A571819FA9F1B00F4F476 /* FileDetailsViewController.m */; };
 		D942210119E8248400F0D350 /* ADALiOSBundle-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D94220FD19E8248400F0D350 /* ADALiOSBundle-Info.plist */; };
 		D942210219E8248400F0D350 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D94220FF19E8248400F0D350 /* InfoPlist.strings */; };
 		D942210519E825B300F0D350 /* libADALiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D94220F719E8246500F0D350 /* libADALiOS.a */; };
@@ -62,6 +64,10 @@
 		D90A56E319FA73F100F4F476 /* FileListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileListViewController.m; sourceTree = "<group>"; };
 		D90A56E519FA741E00F4F476 /* FileListCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileListCellTableViewCell.h; sourceTree = "<group>"; };
 		D90A56E619FA741E00F4F476 /* FileListCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileListCellTableViewCell.m; sourceTree = "<group>"; };
+		D90A571419FA9F0200F4F476 /* NewFileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFileViewController.h; sourceTree = "<group>"; };
+		D90A571519FA9F0200F4F476 /* NewFileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFileViewController.m; sourceTree = "<group>"; };
+		D90A571719FA9F1B00F4F476 /* FileDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileDetailsViewController.h; sourceTree = "<group>"; };
+		D90A571819FA9F1B00F4F476 /* FileDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileDetailsViewController.m; sourceTree = "<group>"; };
 		D94220C619E821ED00F0D350 /* O365-Files-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "O365-Files-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D94220EF19E8246500F0D350 /* ADALiOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ADALiOS.xcodeproj; path = lib/ADALiOS/ADALiOS.xcodeproj; sourceTree = "<group>"; };
 		D94220FD19E8248400F0D350 /* ADALiOSBundle-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ADALiOSBundle-Info.plist"; sourceTree = "<group>"; };
@@ -100,6 +106,10 @@
 				D94EB04219F6DDB600137259 /* ViewController.m */,
 				D90A56E219FA73F100F4F476 /* FileListViewController.h */,
 				D90A56E319FA73F100F4F476 /* FileListViewController.m */,
+				D90A571419FA9F0200F4F476 /* NewFileViewController.h */,
+				D90A571519FA9F0200F4F476 /* NewFileViewController.m */,
+				D90A571719FA9F1B00F4F476 /* FileDetailsViewController.h */,
+				D90A571819FA9F1B00F4F476 /* FileDetailsViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -283,7 +293,9 @@
 				D94EB04A19F6DDB600137259 /* ViewController.m in Sources */,
 				D94EB04919F6DDB600137259 /* main.m in Sources */,
 				D90A56E419FA73F100F4F476 /* FileListViewController.m in Sources */,
+				D90A571619FA9F0200F4F476 /* NewFileViewController.m in Sources */,
 				D90A56E719FA741E00F4F476 /* FileListCellTableViewCell.m in Sources */,
+				D90A571919FA9F1B00F4F476 /* FileDetailsViewController.m in Sources */,
 				D94EB04319F6DDB600137259 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
