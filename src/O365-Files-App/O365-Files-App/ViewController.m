@@ -39,7 +39,6 @@ NSString* token;
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void) getToken : (BOOL) clearCache completionHandler:(void (^) (NSString*))completionBlock;
