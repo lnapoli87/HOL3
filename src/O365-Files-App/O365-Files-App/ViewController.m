@@ -26,6 +26,12 @@ NSString* token;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
+                                                  forBarMetrics:UIBarMetricsDefault];
+    self.navigationController.navigationBar.shadowImage = [UIImage new];
+    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.view.backgroundColor = [UIColor clearColor];
+    
     authority = [NSString alloc];
     resourceId = [NSString alloc];
     clientId = [NSString alloc];
@@ -35,6 +41,8 @@ NSString* token;
     resourceId = @"https://foxintergen.sharepoint.com";
     clientId = @"13b04d26-95fc-4fb4-a67e-c850e07822a8";
     token = [NSString alloc];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
 - (void)didReceiveMemoryWarning {

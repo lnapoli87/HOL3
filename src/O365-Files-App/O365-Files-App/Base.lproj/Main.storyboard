@@ -141,6 +141,7 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xs6-WZ-w5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -209,6 +210,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AWX-YN-Gwy" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DtD-Uu-tKz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
