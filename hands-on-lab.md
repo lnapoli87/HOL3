@@ -448,7 +448,7 @@ in order to have access to the o365-files-sdk.
 
 06. Build and Run the app, and check everything is ok. Now you can see the File details and when tapping the action button, you can see a preview of the document.
 
-    File details
+    File details                                                                        
     ![](img/fig.14.png)
 
     File preview                                                                      
