@@ -122,8 +122,8 @@
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
-                                    <outlet property="dataSource" destination="8br-GU-edc" id="uLP-f1-N7g"/>
-                                    <outlet property="delegate" destination="8br-GU-edc" id="diO-Rp-pA6"/>
+                                    <outlet property="dataSource" destination="8br-GU-edc" id="0JF-df-w5i"/>
+                                    <outlet property="delegate" destination="8br-GU-edc" id="HGP-As-Ckp"/>
                                 </connections>
                             </tableView>
                         </subviews>
@@ -138,6 +138,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="File List" id="5Cq-zS-agh"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <connections>
+                        <outlet property="tableView" destination="fTl-tR-rdV" id="4ud-XL-M3h"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xs6-WZ-w5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -162,7 +165,11 @@
                                 </constraints>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="VYR-7E-r12"/>
-                                    <barButtonItem systemItem="action" id="SLg-SE-gir"/>
+                                    <barButtonItem systemItem="action" id="SLg-SE-gir">
+                                        <connections>
+                                            <action selector="downloadAction:" destination="hxK-Xp-BVM" id="sEa-pP-bWq"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Sdn-SE-wlb"/>
                                 </items>
                             </toolbar>
