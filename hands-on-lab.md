@@ -363,7 +363,9 @@ in order to have access to the o365-files-sdk.
     ```
 
     Add the import sentence:
+    ```
     #import "office365-files-sdk/FileEntity.h"
+    ```    
 
 03. Open the **FilesDetailsViewController.m** class implementation and add the **loadFile** method
 
@@ -446,9 +448,10 @@ self.created.text = [self.file.TimeCreated substringToIndex:10];
 
 06. Build and Run the app, and check everything is ok. Now you can see the File details and when tapping the action button, you can see a preview of the document.
 
+    File details
     ![](img/fig.14.png)
 
-    And the preview                                                                      
+    File preview                                                                      
     ![](img/fig.15.png)
 
 
