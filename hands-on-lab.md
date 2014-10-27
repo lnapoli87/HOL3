@@ -3,12 +3,11 @@ Module XX: *Manage Lists in a O365 tenant with iOS*
 
 ##Overview
 
-The lab lets students use an AzureAD account to manage lists in a O365 Sharepoint tenant with an iOS app.
+The lab lets students use an AzureAD account to manage files in a O365 Sharepoint tenant with an iOS app.
 
 ##Objectives
 
-- Learn how to create a client for O365 to manage lists and listsItems
-- Learn how to add features to create, edit and delete lists and items within an iOS app.
+- Learn how to create a client for O365 to list files and download to the local storage to then show it in a preview page.
 
 ##Prerequisites
 
@@ -22,13 +21,13 @@ The lab lets students use an AzureAD account to manage lists in a O365 Sharepoin
 
 The hands-on lab includes the following exercises:
 
-- [Add O365 iOS lists sdk library to the project](#exercise1)
+- [Add O365 iOS files sdk library to the project](#exercise1)
 - [Create a Client class for all operations](#exercise2)
 - [Connect actions in the view to ProjectClient class](#exercise3)
 
 <a name="exercise1"></a>
-##Exercise 1: Add O365 iOS lists sdk library to a project
-In this exercise you will use an existing application with the AzureAD authentication included, to add the O365 lists sdk library in the project
+##Exercise 1: Add O365 iOS files sdk library to a project
+In this exercise you will use an existing application with the AzureAD authentication included, to add the O365 files sdk library in the project
 and create a client class with empty methods in it to handle the requests to the Sharepoint tenant.
 
 ###Task 1 - Open the Project
@@ -38,7 +37,7 @@ and create a client class with empty methods in it to handle the requests to the
     git clone 
     ```
 
-02. Open the **.xcodeproj** file in the O365-lists-app
+02. Open the **.xcodeproj** file in the O365-Files-App
 
 03. Find and Open the **ViewController.m** class under **O365-lists-app/controllers/login/**
 
@@ -51,51 +50,55 @@ and create a client class with empty methods in it to handle the requests to the
     ```
     Application:
     You will se a login page with buttons to access the application and to clear credentials.
-    Once authenticated, a Project list will appear with one fake entry. Also there is an add 
-    Project screen (tapping the plus sign), and a Project Details screen (selecting a row in 
-    the table) with References that contains a Title, Comments and a Url that can be opened
-    in Safari app. Finally we can access to the screens to manage the References.
+    Once authenticated, a File list will appear with one fake entry. Also there is a File 
+    Details screen (selecting a row in the table) with the name, last modified and created dates.
+    Finally, there is an action button to download the File.
 
     Environment:
-    To manage Projects and its References, we have two lists called "Research Projects" and 
-    "Research References" in a Office365 Sharepoint tenant.
-    Also we have permissions to add, edit and delete items from a list.
-    We will use a files-sdk in order to access the environment using two classes called 
-    "ListEntity" and "ListItem" that have all necesary data to manage the content.
+    To access the files, in the O365 Sharepoint tenant there is a Default space to store documents
+    called "Shared Documents". We will use the o365-files-sdk to access these files, download them,
+    and show a preview in the iOS application.
     ```
 
-    ![](img/fig.08.png)
+    ![](img/fig.02.png)
 
-###Task 2 - Import the library
+###Task 2 - Importing the library
 01. Download a copy of the library using the terminal:
 
     ```
     git clone 
     ```
 
-02. Open the downloaded folder and copy **office365-lists-sdk** folder under **Sdk-ObjectiveC**. Paste it in a lib folder inside our project path.
+02. Open the downloaded folder and copy **office365-files-sdk** folder under **Sdk-ObjectiveC**. Paste it in a lib folder inside our project path.
 
-    ![](img/fig.02.png)
-
-03. Drag the **office365-lists-sdk.xcodeproj** file into XCode under our application project.
-    
     ![](img/fig.03.png)
+
+03. Drag the **office365-files-sdk.xcodeproj** file into XCode under our application project.
+    
+    ![](img/fig.04.png)
+
+04. Repeat steps 02 and 03 with **office365-base-sdk**
 
 05. Go to project settings selecting the first file from the files explorer. Then click on **Build Phases** and add an entry in the **Target Dependencies** section.
 
-    ![](img/fig.04.png)
-
-06. Select the **office365-lists-sdk** library dependency.
-
     ![](img/fig.05.png)
 
-07. Under **Link Binary with Libraries** add an entry pointing to **office365-lists-sdk.a** file
+06. Select the **office365-files-sdk** and **office365-base-sdk** library dependencies.
 
-    ![](img/fig.06.png) 
+    ![](img/fig.06.png)
 
-08. Follow 05-07 steps again, this time for the **Extension target**.
+07. Under **Link Binary with Libraries** add an entry pointing to **office365-base-sdk.a** and **office365-list-sdk.a** files
 
-    ![](img/fig.15.png)
+    ![](img/fig.07.png)
+
+09. Now delete **ADALiOS.xcodeproj** from the project and select **Remove Reference** 
+    
+    ```
+    This step avoids conflicts because office365-base-sdk already has ADALiOS 
+    and is not necesary to have the library added twice
+    ```    
+
+    ![](img/fig.09.png)
 
 08. Build and Run the application to check everything is ok.
 
