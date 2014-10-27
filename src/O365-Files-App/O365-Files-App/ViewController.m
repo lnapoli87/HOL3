@@ -1,9 +1,3 @@
-//
-//  ViewController.m
-//  AD-Auth-iOS-App
-//  Copyright (c) 2014 MS Open Tech. All rights reserved.
-//
-
 #import "ViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "FileListViewController.h"
