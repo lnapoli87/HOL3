@@ -106,21 +106,15 @@ and create a client class with empty methods in it to handle the requests to the
 
 <a name="exercise2"></a>
 ##Exercise 2: Create a Client class for all operations
-In this exercise you will create a client class for all the operations related to Projects and References. This class will connect to the **office365-lists-sdk**
-and do some parsing and JSON handling
+In this exercise you will create a client class for operations related to Files. This class will connect to the **office365-files-sdk**, and will be subclass of **FileClient**.
 
-###Task 1 - Create a client class to connect to the o365-lists-sdk
+###Task 1 - Create a client class to connect to the o365-files-sdk
 
-01. On the XCode files explorer, under the group **ResearchProjectTrackerApp** you will se a **client** empty folder. Also under **ResearchProjectTrackerExtension/Supporting Files**
-you have another **client** folder.
-
-    ![](img/fig.09.png)
-
-02. On the firt one, make a right click in the client folder and select **New File**. You will see the **New File wizard**. Click on the **iOS** section, select **Cocoa Touch Class** and click **Next**.
+01. On the XCode files explorer, make a right click in the group **Helpers** and select **New File**. You will see the **New File wizard**. Click on the **iOS** section, select **Cocoa Touch Class** and click **Next**.
 
     ![](img/fig.10.png)
 
-03. In this section, configure the new class giving it a name (**ProjectClient**), and make it a subclass of **ListClient**. Make sure that the language dropdown is set with **Objective-C** because our o365-lists library is written in that programming language. Finally click on **Next**.
+03. In this section, configure the new class giving it a name (**CustomFileClient**), and make it a subclass of **ListClient**. Make sure that the language dropdown is set with **Objective-C** because our o365-lists library is written in that programming language. Finally click on **Next**.
 
     ![](img/fig.11.png)    
 
@@ -128,312 +122,91 @@ you have another **client** folder.
 
     ![](img/fig.12.png)
 
-05. Do the same for the other **client** folder under the **ResearchProjectTrackerExtension** in order to create the **ProjectClientEx** class, but in the last step of the wizard, change the target, to add visibility to this scope.
-
-    ![](img/fig.13.png)
-
-06. Now you will have a file structure like this:
-
-    ![](img/fig.14.png)
-
-07. Build the Project and you will see 2 errors. To fix them change the import sentences On **ProjectClient.h** and **ProjectClientEx.m**.
+05. Build the Project and you will see one error. To fix it, change the import sentence On **CustomFileClient.h**.
 
     From :
     ```
-    #import "ListClient.h"
+    #import "FileClient.h"
     ```
 
     To:
     ```
-    #import <office365-lists-sdk/ListClient.h>
+    #import <office365-files-sdk/FileClient.h>
     ```
 
 08. Re-build the project and check everything is ok.
 
 
 
-###Task 2 - Add ProjectClient methods
+###Task 2 - Add CustomFileClient methods
 
-01. Open the **ProjectClient.h** class and then add the following between **@interface** and **@end**
-
-    ```
-    - (NSURLSessionDataTask *)addProject:(ListItem *)listItem callback: (void (^)(BOOL success, NSError *error))callback;
-    - (NSURLSessionDataTask *)updateProject:(ListItem *)project callback:(void (^)(BOOL, NSError *))callback;
-    - (NSURLSessionDataTask *)updateReference:(ListItem *)reference callback:(void (^)(BOOL, NSError *))callback;
-    - (NSURLSessionDataTask *)addReference:(ListItem *)reference callback: (void (^)(BOOL success, NSError *error))callback;
-    - (NSURLSessionDataTask *)getReferencesByProjectId:(NSString *)projectId callback:(void (^)(NSMutableArray *listItems, NSError *error))callback;
-    - (NSURLSessionDataTask *)deleteListItem:(NSString *)name itemId:(NSString *)itemId callback:(void (^)(BOOL result, NSError *error))callback;
-    +(ProjectClient*)getClient: (NSString *) token;
-    ```
-
-    Each method is responsible of retrieve data from the O365 tenant and parse it, or manage add, edit, delete actions.
-    Also add the import sentence:
+01. Open the **CustomFileClient.h** class and then add the following between **@interface** and **@end**
 
     ```
-    #import <office365-lists-sdk/ListItem.h>
+    - (NSURLSessionDataTask *)getFiles:(NSString *)folder callback :(void (^)(NSMutableArray *files, NSError *))callback;
+    - (NSURLSessionDataTask *)download:(NSString *)fileName callback :(void (^)(NSData *data, NSError *error))callback;
+    +(FileClient*)getClient:(NSString *) token;
     ```
 
-02. Add the body of each method in the **ProjectClient.m** file.
+02. Add the body of each method in the **CustomFileClient.m** file.
 
-    Add Project
+    Get Files
     ```
-    const NSString *apiUrl = @"/_api/lists";
+    const NSString *apiUrl = @"/_api/files";
 
-- (NSURLSessionDataTask *)addProject:(ListItem *)listItem callback:(void (^)(BOOL, NSError *))callback
-{
-    NSString *url = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items", self.Url , apiUrl, [@"Research Projects" urlencode]];
+- (NSURLSessionDataTask *)getFiles:(NSString *)folder callback :(void (^)(NSMutableArray *files, NSError *))callback{
     
-    NSString *json = [[NSString alloc] init];
-    json = @"{ 'Title': '%@'}}";
+    NSString *url;
     
-    NSString *formatedJson = [NSString stringWithFormat:json, [listItem getTitle]];
+    if(folder == nil){
+        url = [NSString stringWithFormat:@"%@%@", self.Url , apiUrl];
+    }
+    else{
+        url = [NSString stringWithFormat:@"%@%@", self.Url , apiUrl, [folder urlencode]];
+    }
     
-    NSData *jsonData = [formatedJson dataUsingEncoding: NSUTF8StringEncoding];
-    
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential
-                                                                         url:url
-                                                                   bodyArray: jsonData];
-    
-    NSString *method = (NSString*)[[Constants alloc] init].Method_Post;
-    
-    return [connection execute:method callback:^(NSData  *data, NSURLResponse *reponse, NSError *error) {
-        ListItem *list;
-        
-        if(error == nil){
-            list = [[ListItem alloc] initWithJson:data];
-        }
-        
-        callback(list, error);
-    }];
-}
-    ```
-
-    Update Project
-    ```
-- (NSURLSessionDataTask *)updateProject:(ListItem *)project callback:(void (^)(BOOL, NSError *))callback
-{
-    NSString *url = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items(%@)", self.Url , apiUrl, [@"Research Projects" urlencode], project.Id];
-    
-    NSString *json = [[NSString alloc] init];
-    json = @"{ 'Title': '%@'}";
-    
-    NSString *formatedJson = [NSString stringWithFormat:json, [project getTitle]];
-    
-    NSData *jsonData = [formatedJson dataUsingEncoding: NSUTF8StringEncoding];
-    
-    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [theRequest setValue:@"MERGE" forHTTPHeaderField:@"X-HTTP-Method"];
-    [theRequest setValue:@"*" forHTTPHeaderField:@"IF-MATCH"];
-    [theRequest setHTTPBody:jsonData];
-    [self.Credential prepareRequest:theRequest];
-    
-    
-    NSURLResponse * response = nil;
-    NSError * error = nil;
-    NSData * data = [NSURLConnection sendSynchronousRequest:theRequest
-                                          returningResponse:&response
-                                                      error:&error];
-    
-    NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data
-                                                               options: NSJSONReadingMutableContainers
-                                                                 error:nil];
-    NSString *myString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    callback((!jsonResult && [myString isEqualToString:@""]), error);
-
-    return 0;
-}
-    ```
-
-    Update Reference
-    ```
-- (NSURLSessionDataTask *)updateReference:(ListItem *)reference callback:(void (^)(BOOL, NSError *))callback
-{
-    NSString *url = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items(%@)", self.Url , apiUrl, [@"Research References" urlencode], reference.Id];
-    
-    NSString *json = [[NSString alloc] init];
-    json = @"{ 'Comments': '%@', 'URL':{'Url':'%@', 'Description':'%@'}}";
-    
-    NSDictionary *dic =[reference getData:@"URL"];
-    NSString *refUrl = [dic valueForKey:@"Url"];
-    NSString *refTitle = [dic valueForKey:@"Description"];
-    
-    NSString *formatedJson = [NSString stringWithFormat:json, [reference getData:@"Comments"], refUrl, refTitle];
-    
-    NSData *jsonData = [formatedJson dataUsingEncoding: NSUTF8StringEncoding];
-    
-    NSMutableURLRequest *theRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-    
-    [theRequest setHTTPMethod:@"POST"];
-    [theRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-    [theRequest setValue:@"MERGE" forHTTPHeaderField:@"X-HTTP-Method"];
-    [theRequest setValue:@"*" forHTTPHeaderField:@"IF-MATCH"];
-    [theRequest setHTTPBody:jsonData];
-    [self.Credential prepareRequest:theRequest];
-    
-    
-    NSURLResponse * response = nil;
-    NSError * error = nil;
-    NSData * data = [NSURLConnection sendSynchronousRequest:theRequest
-                                          returningResponse:&response
-                                                      error:&error];
-    
-    NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data
-                                                               options: NSJSONReadingMutableContainers
-                                                                 error:nil];
-    NSString *myString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    callback((!jsonResult && [myString isEqualToString:@""]), error);
-    
-    return 0;
-}
-    ```
-
-    Add Reference
-    ```
-- (NSURLSessionDataTask *)addReference:(ListItem *)reference callback:(void (^)(BOOL, NSError *))callback
-{
-    NSString *url = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items", self.Url , apiUrl, [@"Research References" urlencode]];
-    
-    NSString *json = [[NSString alloc] init];
-    json = @"{ 'URL': %@, 'Comments':'%@', 'Project':'%@'}";
-    
-    NSString *formatedJson = [NSString stringWithFormat:json, [reference getData:@"URL"], [reference getData:@"Comments"], [reference getData:@"Project"]];
-    
-    NSData *jsonData = [formatedJson dataUsingEncoding: NSUTF8StringEncoding];
-    
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential
-                                                                         url:url
-                                                                   bodyArray: jsonData];
-    
-    NSString *method = (NSString*)[[Constants alloc] init].Method_Post;
-    
-    return [connection execute:method callback:^(NSData  *data, NSURLResponse *reponse, NSError *error) {
-        ListEntity *list;
-        
-        if(error == nil){
-            list = [[ListEntity alloc] initWithJson:data];
-        }
-        
-        callback(list, error);
-    }];
-}
-    ```
-
-    Get References by Project
-    ```
-- (NSURLSessionDataTask *)getReferencesByProjectId:(NSString *)projectId callback:(void (^)(NSMutableArray *listItems, NSError *error))callback{
-    NSString *queryString = [NSString stringWithFormat:@"Project eq '%@'", projectId];
-    NSString *url = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items?$filter=%@", self.Url , apiUrl, [@"Research References" urlencode], [queryString urlencode]];
     HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential url:url];
     
     NSString *method = (NSString*)[[Constants alloc] init].Method_Get;
     
-    return [connection execute:method callback:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data
-                                                                   options: NSJSONReadingMutableContainers
-                                                                     error:nil];
-        
+    return [connection execute:method callback:^(NSData  *data, NSURLResponse *reponse, NSError *error) {
         NSMutableArray *array = [NSMutableArray array];
         
-        NSMutableArray *listsItemsArray =[self parseDataArray: data];
-        for (NSDictionary* value in listsItemsArray) {
-            [array addObject: [[ListItem alloc] initWithDictionary:value]];
+        if(error == nil){
+            array = [self parseData : data];
         }
         
-        callback(array ,error);
+        callback(array, error);
     }];
 }
     ```
 
-    Delete an Item
+    Download File
     ```
-- (NSURLSessionDataTask *)deleteListItem:(NSString *)name itemId:(NSString *)itemId callback:(void (^)(BOOL result, NSError *error))callback{
+- (NSURLSessionDataTask *)download:(NSString *)fileName callback :(void (^)(NSData *data, NSError *error))callback{
     
-    //NSString *queryString = [NSString stringWithFormat:@"filter=Id eq '%@'", itemId];
-    NSString *url = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items(%@)", self.Url , apiUrl, [name urlencode], itemId];
-    
-    
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential
-                                                                         url:url
-                                                                   bodyArray: nil];
-    
-    NSString *method = (NSString*)[[Constants alloc] init].Method_Delete;
-    
+    NSString *url = [NSString stringWithFormat:@"%@%@('%@')/download", self.Url , apiUrl, [fileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+
+    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential url:url ];
+
+    NSString *method = (NSString*)[[Constants alloc] init].Method_Get;
+
     return [connection execute:method callback:^(NSData  *data, NSURLResponse *reponse, NSError *error) {
-        
-        NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:data
-                                                                   options: NSJSONReadingMutableContainers
-                                                                     error:nil];
-        
-        BOOL result = FALSE;
-        
-        if(error == nil && [data length] == 0 ){
-            result = TRUE;
-        }
-        
-        callback(result, error);
+        callback(data, error);
     }];
 }
     ```
 
-03. Add the **JSON** handling methods:
-
-    Parsing Results
-    ```
-    - (NSMutableArray *)parseDataArray:(NSData *)data{
     
-    NSMutableArray *array = [NSMutableArray array];
-    
-    NSError *error ;
-    
-    NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:[self sanitizeJson:data]
-                                                               options: NSJSONReadingMutableContainers
-                                                                 error:&error];
-    
-    NSArray *jsonArray = [[jsonResult valueForKey : @"d"] valueForKey : @"results"];
-    
-    if(jsonArray != nil){
-        for (NSDictionary *value in jsonArray) {
-            [array addObject: value];
-        }
-    }else{
-        NSDictionary *jsonItem =[jsonResult valueForKey : @"d"];
-        
-        if(jsonItem != nil){
-            [array addObject:jsonItem];
-        }
-    }
-    
-    return array;
-}
-    ```
-
-    Sanitizing JSON
-    ```
- - (NSData*) sanitizeJson : (NSData*) data{
-    NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSString* replacedDataString = [dataString stringByReplacingOccurrencesOfString:@"E+308" withString:@"E+127"];
-    
-    NSData* bytes = [replacedDataString dataUsingEncoding:NSUTF8StringEncoding];
-    
-    return bytes;
-}
-    ```
-
-04. Add the **getClient** class method
+03. Add the **getClient** class method
 
     ```
-    +(ProjectClient*)getClient: (NSString *) token{
+    +(CustomFileClient*)getClient:(NSString *) token{
     OAuthentication* authentication = [OAuthentication alloc];
     [authentication setToken:token];
     
-    return [[ProjectClient alloc] initWithUrl:@"https://xxx.xxx/xxx"
-                                  credentials: authentication];
+    return [[CustomFileClient alloc] initWithUrl:@"https://xxx.xxx/xxx"
+                               credentials: authentication];
     }
     ```
 
@@ -442,302 +215,136 @@ you have another **client** folder.
     initWithUrl:credentials: method.
     ```
 
-05. Add the following import sentences:
+04. Add the following import sentences:
 
     ```
+    #import "office365-base-sdk/NSString+NSStringExtensions.h"
     #import "office365-base-sdk/HttpConnection.h"
     #import "office365-base-sdk/Constants.h"
-    #import "office365-base-sdk/NSString+NSStringExtensions.h"
     #import "office365-base-sdk/OAuthentication.h"
     ```
 
-06. Build the project and check everything is ok.
+05. Build the project and check everything is ok.
 
-07. In **ProjectClientEx.h** header file, add the following declaration between **@interface** and **@end**
-
-    ```
-    - (NSURLSessionDataTask *)addReference:(ListItem *)reference callback: (void (^)(BOOL success, NSError *error))callback;
-    +(ProjectClientEx*)getClient: (NSString *) token;
-    ```
-    And the import sentence:
-    ```
-    #import "office365-lists-sdk/ListItem.h"
-    ```
-
-08. Now on **ProjectClientEx.m** add the method body:
-
-    ```
-const NSString *apiUrl = @"/_api/lists";
-
-- (NSURLSessionDataTask *)addReference:(ListItem *)reference callback:(void (^)(BOOL, NSError *))callback
-{
-    NSString *url = [NSString stringWithFormat:@"%@%@/GetByTitle('%@')/Items", self.Url , apiUrl, [@"Research References" urlencode]];
-    
-    NSString *json = [[NSString alloc] init];
-    json = @"{ 'URL': %@, 'Comments':'%@', 'Project':'%@'}";
-    
-    NSString *formatedJson = [NSString stringWithFormat:json, [reference getData:@"URL"], [reference getData:@"Comments"], [reference getData:@"Project"]];
-    
-    NSData *jsonData = [formatedJson dataUsingEncoding: NSUTF8StringEncoding];
-    
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential
-                                                                         url:url
-                                                                   bodyArray: jsonData];
-    
-    NSString *method = (NSString*)[[Constants alloc] init].Method_Post;
-    
-    return [connection execute:method callback:^(NSData  *data, NSURLResponse *reponse, NSError *error) {
-        ListEntity *list;
-        
-        if(error == nil){
-            list = [[ListEntity alloc] initWithJson:data];
-        }
-        
-        callback(list, error);
-    }];
-    return 0;
-}
-    ```
-
-09. Add the **JSON** handling methods:
-
-    Parsing Results
-    ```
-    - (NSMutableArray *)parseDataArray:(NSData *)data{
-    
-    NSMutableArray *array = [NSMutableArray array];
-    
-    NSError *error ;
-    
-    NSDictionary *jsonResult = [NSJSONSerialization JSONObjectWithData:[self sanitizeJson:data]
-                                                               options: NSJSONReadingMutableContainers
-                                                                 error:&error];
-    
-    NSArray *jsonArray = [[jsonResult valueForKey : @"d"] valueForKey : @"results"];
-    
-    if(jsonArray != nil){
-        for (NSDictionary *value in jsonArray) {
-            [array addObject: value];
-        }
-    }else{
-        NSDictionary *jsonItem =[jsonResult valueForKey : @"d"];
-        
-        if(jsonItem != nil){
-            [array addObject:jsonItem];
-        }
-    }
-    
-    return array;
-}
-    ```
-
-    Sanitizing JSON
-    ```
- - (NSData*) sanitizeJson : (NSData*) data{
-    NSString * dataString = [[NSString alloc ] initWithData:data encoding:NSUTF8StringEncoding];
-    
-    NSString* replacedDataString = [dataString stringByReplacingOccurrencesOfString:@"E+308" withString:@"E+127"];
-    
-    NSData* bytes = [replacedDataString dataUsingEncoding:NSUTF8StringEncoding];
-    
-    return bytes;
-}
-    ```
-
-10. Add the **getClient** class method:
-
-    ```
-+(ProjectClientEx*)getClient: (NSString *) token{
-    OAuthentication* authentication = [OAuthentication alloc];
-    [authentication setToken:token];
-    
-    return [[ProjectClientEx alloc] initWithUrl:@"https://xxx.xxx/xxx"
-                                  credentials: authentication];
-}
-    ```
-
-    ```
-    Make sure to change https://xxx.xxx/xxx with the Resource url in the 
-    initWithUrl:credentials: method.
-    ```
-
-11. Add the following import sentences on **ProjectClientEx.m**
-
-    ```
-#import "office365-base-sdk/HttpConnection.h"
-#import "office365-base-sdk/Constants.h"
-#import "office365-base-sdk/NSString+NSStringExtensions.h"
-#import "office365-base-sdk/OAuthentication.h"
-    ```
-
-12. Build and Run the application and check everything is ok.
 
 <a name="exercise3"></a>
-##Exercise 3: Connect actions in the view to ProjectClient class
-In this exercise you will navigate in every controller class of the project, in order to connect each action (from buttons, lists and events) with one ProjectClient operation.
+##Exercise 3: Connect actions in the view to CustomFileClient class
+In this exercise you will navigate in every controller class of the project, in order to connect each action (from buttons, lists and events) with one CustomFileClient operation.
 
 ```
 The Application has every event wired up with their respective controller classes. 
-We need to connect this event methods to our ProjectClient/ProjectClientEx class 
-in order to have access to the o365-lists-sdk.
+We need to connect this event methods to our CustomFileClient class 
+in order to have access to the o365-files-sdk.
 ```
 
-###Task1 - Wiring up ProjectTableView
+###Task1 - Wiring up FileListView
 
-01. Take a look to the **ProjectTableViewController.m** class implementation. More especifically, the **loadData** method.
-
-    ![](img/fig.16.png)
+01. Open **FileListViewController.h** class header and add a property to store the files.
 
     ```
-    This empty method shows how we use the spinner and then call the data function, 
-    delegating in this method the data gathering and spinner stop.
-
-    All the calls to the O365 client begins creating a NSURLSessionTask that will
-    be executed asyncronously and then call to a callback block that will change the view
-    and to show the data or an error message, also in an async way, putting all the changes
-    in the Execution Main Queue, using:
+    @property NSMutableArray *files;
     ```
 
+    Also add an instance variable in the **FileListViewController.m** to hold the current selection
     ```
-    dispatch_async(dispatch_get_main_queue(), ^{
-        //changes to the view
-    }
+    FileEntity* currentEntity;
     ```
 
-02. Add the **loadData** method body:
+
+02. Open **FileListViewController.m** class implementation and the **loadData** method:
 
     ```
-    -(void)loadData{
+    -(void) loadData{
     //Create and add a spinner
-    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(135,140,50,50)];
+    double x = ((self.navigationController.view.frame.size.width) - 20)/ 2;
+    double y = ((self.navigationController.view.frame.size.height) - 150)/ 2;
+    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(x, y, 20, 20)];
     spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
     [self.view addSubview:spinner];
     spinner.hidesWhenStopped = YES;
     [spinner startAnimating];
     
-    ProjectClient* client = [ProjectClient getClient:self.token];
-    
-   NSURLSessionTask* task = [client getList:@"Research Projects" callback:^(ListEntity *list, NSError *error) {
-        
-    //If list doesn't exists, create one with name Research Projects
-   if(list){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self getProjectsFromList:spinner];
-            });
-        }else{
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self createProjectList:spinner];
-            });
-        }
-        
+    CustomFileClient *client = [CustomFileClient getClient:self.token];
+    NSURLSessionDataTask *task = [client getFiles:@"" callback:^(NSMutableArray *files, NSError *error) {
+        self.files = files;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [spinner stopAnimating];
+        });
     }];
     [task resume];
 }
     ```
 
-03. Add the body for the **getProjectsFromList** and **createProjectList** methods
-
-    Get Projects
+    Now call it from the **viewWillAppear** method. Also add the initialization for **currentEntity** and **files**
     ```
-    -(void)getProjectsFromList:(UIActivityIndicatorView *) spinner{
-    ProjectClient* client = [ProjectClient getClient:self.token];
-    
-    NSURLSessionTask* listProjectsTask = [client getListItems:@"Research Projects" callback:^(NSMutableArray *listItems, NSError *error) {
-        if(!error){
-            self.projectsList = listItems;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.tableView reloadData];
-                [spinner stopAnimating];
-            });
-        }
-    }];
-    [listProjectsTask resume];
+    - (void)viewWillAppear:(BOOL)animated{
+    [self loadData];
+    currentEntity = nil;
+    self.files = [[NSMutableArray alloc] init];
+    }
+    ```
+
+03. Add the table methods:
+
+```
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.files.count;
 }
-    ```
 
-    Create Project List
-    ```
--(void)createProjectList:(UIActivityIndicatorView *) spinner{
-    ProjectClient* client = [ProjectClient getClient:self.token];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSString* identifier = @"fileListCell";
+    FileListCellTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier: identifier ];
     
-    ListEntity* newList = [[ListEntity alloc ] init];
-    [newList setTitle:@"Research Projects"];
+    FileEntity *file = [self.files objectAtIndex:indexPath.row];
     
-    NSURLSessionTask* createProjectListTask = [client createList:newList :^(ListEntity *list, NSError *error) {
-        [spinner stopAnimating];
-    }];
-    [createProjectListTask resume];
-}
-    ```
-
-04. Now fill the table with the projects information
-
-    ```
-    - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString* identifier = @"ProjectListCell";
-    ProjectTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier: identifier ];
-    
-    ListItem *item = [self.projectsList objectAtIndex:indexPath.row];
-    cell.ProjectName.text = [item getTitle];
+    cell.fileName.text = file.Name;
+    cell.lastModified.text = [NSString stringWithFormat:@"Last modified on %@", [file.TimeLastModified substringToIndex:10]];
     
     return cell;
 }
-    ```
 
-05. Get projects count
-    
-    ```
-    - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.projectsList count];
-}
-    ```
-
-06. Row selection
-    
-    ```
-    - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    currentEntity= [self.projectsList objectAtIndex:indexPath.row];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    currentEntity= [self.files objectAtIndex:indexPath.row];
     
     [self performSegueWithIdentifier:@"detail" sender:self];
 }
-    ```
+```
 
-07. Set the selectedProject when navigate forward
+04. Add the navigation methods
 
-    ```
-    - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if([segue.identifier isEqualToString:@"newProject"]){
-        CreateViewController *controller = (CreateViewController *)segue.destinationViewController;
-        controller.token = self.token;
-    }else{
-        ProjectDetailsViewController *controller = (ProjectDetailsViewController *)segue.destinationViewController;
-        //controller.project = currentEntity;
-        controller.token = self.token;
-    }
-    
+```
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
+    return ([identifier isEqualToString:@"detail"] && currentEntity);
 }
-    ```
 
-08. Add the instance variable for the selected project:
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"detail"]){
+        FileDetailsViewController *ctrl = (FileDetailsViewController *)segue.destinationViewController;
+        //ctrl.token = self.token;
+        //ctrl.file = currentEntity;
+    }
+}
+```
 
-    ```
-    ListItem* currentEntity;
-    ```
+05. Add the needed import sentences:
 
-09. Add the import sentence for the ProjectClient class
+```
+#import "FileListCellTableViewCell.h"
+#import "office365-files-sdk/FileClient.h"
+#import "office365-base-sdk/OAuthentication.h"
+#import "office365-files-sdk/FileEntity.h"
+#import "CustomFileClient.h"
+#import "FileDetailsViewController.h"
+```
 
-    ```
-    #import "ProjectClient.h"
-    ```
+06. Build and Run the application. Check everything is ok. Now you will be able to se the Files list from the O365 Sharepoint tenant
 
-10. Build and Run the app, and check everything is ok. You will see the project lists in the main screen
+    ![](img/fig.13.png)
 
-    ![](img/fig.17.png)
+
+
+
 
 ###Task2 - Wiring up CreateProjectView
 
