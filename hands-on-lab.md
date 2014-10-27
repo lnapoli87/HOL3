@@ -349,10 +349,10 @@ in order to have access to the o365-files-sdk.
 
 01. On **FileDetailsViewController.m**, uncomment the lines in the **prepareForSegue:identifier:** to allow passing the selected file to the next screen.
 
-```
-//ctrl.token = self.token;
-//ctrl.file = currentEntity;
-```
+    ```
+    //ctrl.token = self.token;
+    //ctrl.file = currentEntity;
+    ```
 
 02. Open **FilesDetailsViewController.h** and add properties for the token, the selected file and the document handler
 
@@ -369,82 +369,82 @@ in order to have access to the o365-files-sdk.
 
 03. Open the **FilesDetailsViewController.m** class implementation and add the **loadFile** method
 
-```
-    - (void) loadFile{
-    double x = ((self.navigationController.view.frame.size.width) - 20)/ 2;
-    double y = ((self.navigationController.view.frame.size.height) - 150)/ 2;
-    spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(x, y, 20, 20)];
-    spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-    [self.view addSubview:spinner];
-    spinner.hidesWhenStopped = YES;
-    [spinner startAnimating];
-    
-    NSString *fileUrlString = self.file.Url;
-    
-    CustomFileClient *client = [CustomFileClient getClient:self.token];
-    
-    NSURLSessionDataTask *task = [client download:self.file.Name callback:^(NSData *data, NSError *error) {
-        if ( data )
-        {
-            NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString  *documentsDirectory = [paths objectAtIndex:0];
-            
-            NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,self.file.Name];
-            [data writeToFile:filePath atomically:YES];
-            
-            NSURL *fileUrl = [NSURL fileURLWithPath:filePath];
-            
-            self.docInteractionController = [UIDocumentInteractionController interactionControllerWithURL:fileUrl];
-            self.docInteractionController.delegate = self;
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [spinner stopAnimating];
-        });
-    }];
-    
-    [task resume];
-}
-```
+    ```
+        - (void) loadFile{
+        double x = ((self.navigationController.view.frame.size.width) - 20)/ 2;
+        double y = ((self.navigationController.view.frame.size.height) - 150)/ 2;
+        spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(x, y, 20, 20)];
+        spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+        [self.view addSubview:spinner];
+        spinner.hidesWhenStopped = YES;
+        [spinner startAnimating];
+        
+        NSString *fileUrlString = self.file.Url;
+        
+        CustomFileClient *client = [CustomFileClient getClient:self.token];
+        
+        NSURLSessionDataTask *task = [client download:self.file.Name callback:^(NSData *data, NSError *error) {
+            if ( data )
+            {
+                NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+                NSString  *documentsDirectory = [paths objectAtIndex:0];
+                
+                NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,self.file.Name];
+                [data writeToFile:filePath atomically:YES];
+                
+                NSURL *fileUrl = [NSURL fileURLWithPath:filePath];
+                
+                self.docInteractionController = [UIDocumentInteractionController interactionControllerWithURL:fileUrl];
+                self.docInteractionController.delegate = self;
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [spinner stopAnimating];
+            });
+        }];
+        
+        [task resume];
+    }
+    ```
 
-Also add the import sentence to the client class:
-```
-#import "CustomFileClient.h"
-```
+    Also add the import sentence to the client class:
+    ```
+    #import "CustomFileClient.h"
+    ```
 
-And an instance variable to hold the spinner:
-```
-UIActivityIndicatorView* spinner;
-```
+    And an instance variable to hold the spinner:
+    ```
+    UIActivityIndicatorView* spinner;
+    ```
 
 04. Add the download button action and the documents handler methods
 
-```
-- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
-{
-    return [self navigationController];
-}
+    ```
+    - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
+    {
+        return [self navigationController];
+    }
 
 
-- (IBAction)downloadAction:(id)sender {
-    [self.docInteractionController presentPreviewAnimated:YES];
-}
-```
+    - (IBAction)downloadAction:(id)sender {
+        [self.docInteractionController presentPreviewAnimated:YES];
+    }
+    ```
 
-```
-To handle the files, first we have to download and store it in the device local storage.
-Using the UIDocumentInteractionController we can access to this file url and show a preview
-of the file within the app. Also we have actions to open the file in other applications.
-```
+    ```
+    To handle the files, first we have to download and store it in the device local storage.
+    Using the UIDocumentInteractionController we can access to this file url and show a preview
+    of the file within the app. Also we have actions to open the file in other applications.
+    ```
 
 05. Now in the **viewDidLoad** method, add the labels value and call the **loadFile** method:
 
-```
-self.fileName.text = self.file.Name;
-self.lastModified.text = [self.file.TimeLastModified substringToIndex:10];
-self.created.text = [self.file.TimeCreated substringToIndex:10];
-  
-[self loadFile];
-```
+    ```
+    self.fileName.text = self.file.Name;
+    self.lastModified.text = [self.file.TimeLastModified substringToIndex:10];
+    self.created.text = [self.file.TimeCreated substringToIndex:10];
+      
+    [self loadFile];
+    ```
 
 06. Build and Run the app, and check everything is ok. Now you can see the File details and when tapping the action button, you can see a preview of the document.
 
