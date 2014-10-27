@@ -22,8 +22,8 @@ The lab lets students use an AzureAD account to manage files in a O365 Sharepoin
 The hands-on lab includes the following exercises:
 
 - [Add O365 iOS files sdk library to the project](#exercise1)
-- [Create a Client class for all operations](#exercise2)
-- [Connect actions in the view to ProjectClient class](#exercise3)
+- [Create a Client class for retrieve information and download files](#exercise2)
+- [Connect actions in the view to CustomFileClient class](#exercise3)
 
 <a name="exercise1"></a>
 ##Exercise 1: Add O365 iOS files sdk library to a project
@@ -105,7 +105,7 @@ and create a client class with empty methods in it to handle the requests to the
     ![](img/fig.09.png)
 
 <a name="exercise2"></a>
-##Exercise 2: Create a Client class for all operations
+##Exercise 2: Create a Client class for retrieve information and download files
 In this exercise you will create a client class for operations related to Files. This class will connect to the **office365-files-sdk**, and will be subclass of **FileClient**.
 
 ###Task 1 - Create a client class to connect to the o365-files-sdk
