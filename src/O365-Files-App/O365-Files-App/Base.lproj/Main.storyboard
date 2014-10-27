@@ -90,7 +90,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="67" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fTl-tR-rdV">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="67" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="fTl-tR-rdV">
                                 <rect key="frame" x="0.0" y="68" width="600" height="504"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -130,43 +130,17 @@
                         <color key="backgroundColor" red="0.92779806389999997" green="0.92779806389999997" blue="0.92779806389999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="fTl-tR-rdV" firstAttribute="top" secondItem="wV0-yk-hi0" secondAttribute="bottom" constant="2" id="UEm-ft-O14"/>
+                            <constraint firstItem="fTl-tR-rdV" firstAttribute="leading" secondItem="kiD-uD-j3D" secondAttribute="leadingMargin" constant="-16" id="V3h-IY-kOw"/>
                             <constraint firstItem="wV0-yk-hi0" firstAttribute="top" secondItem="k1i-xl-86r" secondAttribute="bottom" constant="25" id="Zhf-xX-rrs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fTl-tR-rdV" secondAttribute="trailing" constant="-16" id="sDr-X0-kyV"/>
                             <constraint firstItem="SlJ-C0-lTT" firstAttribute="top" secondItem="fTl-tR-rdV" secondAttribute="bottom" constant="28" id="siG-xl-JF0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="File List" id="gLt-Ds-dz1" userLabel="navbar">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="hfq-zc-YgE">
-                            <connections>
-                                <segue destination="G2O-6N-Gtq" kind="show" id="aBp-aq-KbQ"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xs6-WZ-w5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1558" y="136"/>
-        </scene>
-        <!--New File-->
-        <scene sceneID="zGr-Sp-877">
-            <objects>
-                <viewController title="New File" id="G2O-6N-Gtq" userLabel="New File" customClass="NewFileViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="JVn-Id-9rn"/>
-                        <viewControllerLayoutGuide type="bottom" id="ZaT-tH-elh"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="CJs-jL-dJJ">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.92779806389999997" green="0.92779806389999997" blue="0.92779806389999997" alpha="1" colorSpace="calibratedRGB"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="New File" id="2Yy-ah-tbJ" userLabel="navbar">
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="e48-LV-O5k"/>
-                    </navigationItem>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="fTU-Gr-Jpq" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1558" y="952"/>
         </scene>
         <!--File Details-->
         <scene sceneID="ndQ-pJ-IV9">
@@ -191,15 +165,103 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Sdn-SE-wlb"/>
                                 </items>
                             </toolbar>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="File Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8w-4D-lyw">
+                                <rect key="frame" x="16" y="56" width="77" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Last Modified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vu7-Pn-RmY">
+                                <rect key="frame" x="16" y="169" width="105" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Created" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2j4-dB-N0a">
+                                <rect key="frame" x="16" y="278" width="61" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gDn-yA-RoN">
+                                <rect key="frame" x="0.0" y="85" width="600" height="33"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="fileName" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RjI-BF-SS5">
+                                        <rect key="frame" x="17" y="4" width="567" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="4tI-ze-T0Y"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="RjI-BF-SS5" secondAttribute="trailing" constant="8" id="GBo-cs-yC5"/>
+                                    <constraint firstAttribute="height" constant="33" id="a8U-SJ-RYr"/>
+                                    <constraint firstItem="RjI-BF-SS5" firstAttribute="leading" secondItem="gDn-yA-RoN" secondAttribute="leadingMargin" constant="9" id="fTr-CX-ZrK"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5ig-HP-ZKb">
+                                <rect key="frame" x="0.0" y="198" width="600" height="33"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="lastModified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MWf-6G-qFv">
+                                        <rect key="frame" x="17" y="4" width="567" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="33" id="HYz-Kn-XVL"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="MWf-6G-qFv" secondAttribute="trailing" constant="8" id="aAZ-Lv-ooV"/>
+                                    <constraint firstItem="MWf-6G-qFv" firstAttribute="leading" secondItem="5ig-HP-ZKb" secondAttribute="leadingMargin" constant="9" id="p8M-Yy-5p2"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="yyo-SS-zZO"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vc4-f8-Ngq">
+                                <rect key="frame" x="0.0" y="307" width="600" height="33"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="created" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A8D-kN-bOo">
+                                        <rect key="frame" x="17" y="4" width="567" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="A8D-kN-bOo" firstAttribute="leading" secondItem="vc4-f8-Ngq" secondAttribute="leadingMargin" constant="9" id="5SC-tJ-w2L"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="33" id="RZm-he-Fph"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="A8D-kN-bOo" secondAttribute="trailing" constant="8" id="U7C-zc-zml"/>
+                                    <constraint firstAttribute="height" constant="33" id="rsr-Vw-XqH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.92779806389999997" green="0.92779806389999997" blue="0.92779806389999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="5ig-HP-ZKb" secondAttribute="trailing" constant="-16" id="0ry-Aw-wLo"/>
                             <constraint firstItem="6SQ-nj-fgL" firstAttribute="top" secondItem="bvc-MI-jzl" secondAttribute="bottom" id="7kM-YI-gUN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gDn-yA-RoN" secondAttribute="trailing" constant="-16" id="7sm-cl-Izn"/>
+                            <constraint firstItem="vu7-Pn-RmY" firstAttribute="top" secondItem="gDn-yA-RoN" secondAttribute="bottom" constant="51" id="Gz9-Qq-tRX"/>
                             <constraint firstItem="bvc-MI-jzl" firstAttribute="leading" secondItem="Ww5-b4-fYf" secondAttribute="leadingMargin" constant="-16" id="Nh7-xt-6a8"/>
+                            <constraint firstItem="vc4-f8-Ngq" firstAttribute="top" secondItem="2j4-dB-N0a" secondAttribute="bottom" constant="8" id="UPL-pI-cTt"/>
+                            <constraint firstItem="2j4-dB-N0a" firstAttribute="top" secondItem="5ig-HP-ZKb" secondAttribute="bottom" constant="51" id="VGo-ED-Ml5"/>
+                            <constraint firstItem="5ig-HP-ZKb" firstAttribute="leading" secondItem="Ww5-b4-fYf" secondAttribute="leadingMargin" constant="-16" id="VbS-Mr-3eK"/>
+                            <constraint firstItem="gDn-yA-RoN" firstAttribute="top" secondItem="d8w-4D-lyw" secondAttribute="bottom" constant="8" id="YqD-Xw-M0D"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bvc-MI-jzl" secondAttribute="trailing" constant="-16" id="hqz-KH-ZSp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vc4-f8-Ngq" secondAttribute="trailing" constant="-16" id="ian-kC-0oA"/>
+                            <constraint firstItem="gDn-yA-RoN" firstAttribute="leading" secondItem="Ww5-b4-fYf" secondAttribute="leadingMargin" constant="-16" id="owz-M5-iYH"/>
+                            <constraint firstItem="5ig-HP-ZKb" firstAttribute="top" secondItem="vu7-Pn-RmY" secondAttribute="bottom" constant="8" id="paE-kK-R4q"/>
+                            <constraint firstItem="vc4-f8-Ngq" firstAttribute="leading" secondItem="Ww5-b4-fYf" secondAttribute="leadingMargin" constant="-16" id="v2g-xc-tq7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="File Details" id="JgH-6f-OU5" userLabel="navbar"/>
+                    <connections>
+                        <outlet property="created" destination="A8D-kN-bOo" id="4S7-Nj-bwO"/>
+                        <outlet property="fileName" destination="RjI-BF-SS5" id="jPT-xN-NzG"/>
+                        <outlet property="lastModified" destination="MWf-6G-qFv" id="cvp-a9-417"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fpc-6f-gOq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
