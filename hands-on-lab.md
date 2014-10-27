@@ -347,7 +347,7 @@ in order to have access to the o365-files-sdk.
 
 ###Task2 - Wiring up FilesDetailsView
 
-01. On **FileDetailsViewController.m**, uncomment the lines in the **prepareForSegue:identifier:** to allow passing the selected file to the next screen.
+01. On **FileListViewController.m**, uncomment the lines in the **prepareForSegue:identifier:** to allow passing the selected file to the next screen.
 
     ```
     //ctrl.token = self.token;
