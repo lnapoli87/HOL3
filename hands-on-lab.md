@@ -98,11 +98,11 @@ and create a client class with empty methods in it to handle the requests to the
     and is not necesary to have the library added twice
     ```    
 
-    ![](img/fig.09.png)
+    ![](img/fig.08.png)
 
 08. Build and Run the application to check everything is ok.
 
-    ![](img/fig.07.png)
+    ![](img/fig.09.png)
 
 <a name="exercise2"></a>
 ##Exercise 2: Create a Client class for all operations
