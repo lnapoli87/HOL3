@@ -287,29 +287,29 @@ in order to have access to the o365-files-sdk.
 
 03. Add the table methods:
 
-```
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return self.files.count;
-}
+    ```
+    - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+        return self.files.count;
+    }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSString* identifier = @"fileListCell";
-    FileListCellTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier: identifier ];
-    
-    FileEntity *file = [self.files objectAtIndex:indexPath.row];
-    
-    cell.fileName.text = file.Name;
-    cell.lastModified.text = [NSString stringWithFormat:@"Last modified on %@", [file.TimeLastModified substringToIndex:10]];
-    
-    return cell;
-}
+    - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+        NSString* identifier = @"fileListCell";
+        FileListCellTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier: identifier ];
+        
+        FileEntity *file = [self.files objectAtIndex:indexPath.row];
+        
+        cell.fileName.text = file.Name;
+        cell.lastModified.text = [NSString stringWithFormat:@"Last modified on %@", [file.TimeLastModified substringToIndex:10]];
+        
+        return cell;
+    }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    currentEntity= [self.files objectAtIndex:indexPath.row];
-    
-    [self performSegueWithIdentifier:@"detail" sender:self];
-}
-```
+    - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+        currentEntity= [self.files objectAtIndex:indexPath.row];
+        
+        [self performSegueWithIdentifier:@"detail" sender:self];
+    }
+    ```
 
 04. Add the navigation methods
 
