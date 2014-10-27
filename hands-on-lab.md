@@ -313,30 +313,30 @@ in order to have access to the o365-files-sdk.
 
 04. Add the navigation methods
 
-```
-- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
-    return ([identifier isEqualToString:@"detail"] && currentEntity);
-}
-
--(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if([segue.identifier isEqualToString:@"detail"]){
-        FileDetailsViewController *ctrl = (FileDetailsViewController *)segue.destinationViewController;
-        //ctrl.token = self.token;
-        //ctrl.file = currentEntity;
+    ```
+    - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
+        return ([identifier isEqualToString:@"detail"] && currentEntity);
     }
-}
-```
+
+    -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+        if([segue.identifier isEqualToString:@"detail"]){
+            FileDetailsViewController *ctrl = (FileDetailsViewController *)segue.destinationViewController;
+            //ctrl.token = self.token;
+            //ctrl.file = currentEntity;
+        }
+    }
+    ```
 
 05. Add the needed import sentences:
 
-```
-#import "FileListCellTableViewCell.h"
-#import "office365-files-sdk/FileClient.h"
-#import "office365-base-sdk/OAuthentication.h"
-#import "office365-files-sdk/FileEntity.h"
-#import "CustomFileClient.h"
-#import "FileDetailsViewController.h"
-```
+    ```
+    #import "FileListCellTableViewCell.h"
+    #import "office365-files-sdk/FileClient.h"
+    #import "office365-base-sdk/OAuthentication.h"
+    #import "office365-files-sdk/FileEntity.h"
+    #import "CustomFileClient.h"
+    #import "FileDetailsViewController.h"
+    ```
 
 06. Build and Run the application. Check everything is ok. Now you will be able to se the Files list from the O365 Sharepoint tenant
 
