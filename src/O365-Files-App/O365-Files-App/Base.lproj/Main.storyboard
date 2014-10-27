@@ -136,6 +136,7 @@
                             <constraint firstItem="SlJ-C0-lTT" firstAttribute="top" secondItem="fTl-tR-rdV" secondAttribute="bottom" constant="28" id="siG-xl-JF0"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="File List" id="5Cq-zS-agh"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xs6-WZ-w5J" userLabel="First Responder" sceneMemberID="firstResponder"/>
