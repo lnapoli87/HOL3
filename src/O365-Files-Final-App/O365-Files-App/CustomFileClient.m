@@ -63,8 +63,12 @@ const NSString *apiUrl = @"/_api/files";
     OAuthentication* authentication = [OAuthentication alloc];
     [authentication setToken:token];
     
-    return [[CustomFileClient alloc] initWithUrl:@"https://foxintergen.sharepoint.com/ContosoResearchTracker"
-                               credentials: authentication];
+    NSString *url = [NSString alloc];
+    NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Auth" ofType:@"plist"];
+    url = [[NSDictionary dictionaryWithContentsOfFile:plistPath] objectForKey:@"o365SharepointTenantUrl"];
+    
+    
+    return [[CustomFileClient alloc] initWithUrl: url credentials: authentication];
 }
 
 @end
