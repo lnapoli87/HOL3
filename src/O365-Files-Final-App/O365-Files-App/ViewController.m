@@ -28,10 +28,15 @@ NSString* token;
     resourceId = [NSString alloc];
     clientId = [NSString alloc];
     redirectUriString = [NSString alloc];
-    authority = @"https://xxx.xxx/xxx";
-    redirectUriString = @"http://xxx/xxx";
-    resourceId = @"https://xxx.xxx";
-    clientId = @"xxx-xxx-xxx-xxx";
+    
+    NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Auth" ofType:@"plist"];
+    NSDictionary *content = [NSDictionary dictionaryWithContentsOfFile:plistPath];
+    
+    authority = [content objectForKey:@"authority"];
+    resourceId = [content objectForKey:@"resourceId"];
+    clientId = [content objectForKey:@"clientId"];
+    redirectUriString = [content objectForKey:@"redirectUriString"];
+    
     token = [NSString alloc];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
