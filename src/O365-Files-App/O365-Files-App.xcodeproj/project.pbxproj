@@ -7,15 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D4242A13A34EAA4306DEA25B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38323226CD6D8D467FD218DB /* libPods.a */; };
 		D90A56DE19FA6FFC00F4F476 /* office365.png in Resources */ = {isa = PBXBuildFile; fileRef = D90A56DD19FA6FFC00F4F476 /* office365.png */; };
 		D90A56E419FA73F100F4F476 /* FileListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D90A56E319FA73F100F4F476 /* FileListViewController.m */; };
 		D90A56E719FA741E00F4F476 /* FileListCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D90A56E619FA741E00F4F476 /* FileListCellTableViewCell.m */; };
 		D90A571919FA9F1B00F4F476 /* FileDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D90A571819FA9F1B00F4F476 /* FileDetailsViewController.m */; };
-		D942210119E8248400F0D350 /* ADALiOSBundle-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D94220FD19E8248400F0D350 /* ADALiOSBundle-Info.plist */; };
-		D942210219E8248400F0D350 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D94220FF19E8248400F0D350 /* InfoPlist.strings */; };
-		D942210519E825B300F0D350 /* libADALiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D94220F719E8246500F0D350 /* libADALiOS.a */; };
-		D942210D19E82EB800F0D350 /* ADAL_iPad_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D942210B19E82EB800F0D350 /* ADAL_iPad_Storyboard.storyboard */; };
-		D942210E19E82EB800F0D350 /* ADAL_iPhone_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D942210C19E82EB800F0D350 /* ADAL_iPhone_Storyboard.storyboard */; };
 		D94EB04319F6DDB600137259 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D94EB03819F6DDB600137259 /* AppDelegate.m */; };
 		D94EB04419F6DDB600137259 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D94EB03919F6DDB600137259 /* LaunchScreen.xib */; };
 		D94EB04519F6DDB600137259 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D94EB03B19F6DDB600137259 /* Main.storyboard */; };
@@ -24,40 +20,17 @@
 		D94EB04919F6DDB600137259 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D94EB04019F6DDB600137259 /* main.m */; };
 		D94EB04A19F6DDB600137259 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D94EB04219F6DDB600137259 /* ViewController.m */; };
 		D94EB04C19F6DE1200137259 /* ic_launcher-web.png in Resources */ = {isa = PBXBuildFile; fileRef = D94EB04B19F6DE1200137259 /* ic_launcher-web.png */; };
+		D9825E5B1A0B9B4D002A9E75 /* ADAL_iPad_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9825E541A0B9B4D002A9E75 /* ADAL_iPad_Storyboard.storyboard */; };
+		D9825E5C1A0B9B4D002A9E75 /* ADAL_iPhone_Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9825E551A0B9B4D002A9E75 /* ADAL_iPhone_Storyboard.storyboard */; };
+		D9825E5D1A0B9B4D002A9E75 /* ADALiOSBundle-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D9825E561A0B9B4D002A9E75 /* ADALiOSBundle-Info.plist */; };
+		D9825E5E1A0B9B4D002A9E75 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9825E591A0B9B4D002A9E75 /* InfoPlist.strings */; };
+		D9825E611A0B9BEA002A9E75 /* libPods-ADALiOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9825E601A0B9BEA002A9E75 /* libPods-ADALiOS.a */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		D94220F619E8246500F0D350 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D94220EF19E8246500F0D350 /* ADALiOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8B0965AA17F25770002BDFB8;
-			remoteInfo = ADALiOS;
-		};
-		D94220F819E8246500F0D350 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D94220EF19E8246500F0D350 /* ADALiOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8B0965BA17F25770002BDFB8;
-			remoteInfo = ADALiOSTests;
-		};
-		D94220FA19E8246500F0D350 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D94220EF19E8246500F0D350 /* ADALiOS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8BFEF05C182DA57800122C0C;
-			remoteInfo = ADALiOSBundle;
-		};
-		D942210319E825A800F0D350 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D94220EF19E8246500F0D350 /* ADALiOS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8B0965A917F25770002BDFB8;
-			remoteInfo = ADALiOS;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
+		38323226CD6D8D467FD218DB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B449009C81E274090B82D6C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		CACCF5E6E20FBFFBB542A15B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D90A56DD19FA6FFC00F4F476 /* office365.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = office365.png; sourceTree = "<group>"; };
 		D90A56E219FA73F100F4F476 /* FileListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileListViewController.h; sourceTree = "<group>"; };
 		D90A56E319FA73F100F4F476 /* FileListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileListViewController.m; sourceTree = "<group>"; };
@@ -66,12 +39,6 @@
 		D90A571719FA9F1B00F4F476 /* FileDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileDetailsViewController.h; sourceTree = "<group>"; };
 		D90A571819FA9F1B00F4F476 /* FileDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileDetailsViewController.m; sourceTree = "<group>"; };
 		D94220C619E821ED00F0D350 /* O365-Files-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "O365-Files-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D94220EF19E8246500F0D350 /* ADALiOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ADALiOS.xcodeproj; path = lib/ADALiOS/ADALiOS.xcodeproj; sourceTree = "<group>"; };
-		D94220FD19E8248400F0D350 /* ADALiOSBundle-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ADALiOSBundle-Info.plist"; sourceTree = "<group>"; };
-		D94220FE19E8248400F0D350 /* ADALiOSBundle-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ADALiOSBundle-Prefix.pch"; sourceTree = "<group>"; };
-		D942210019E8248400F0D350 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D942210B19E82EB800F0D350 /* ADAL_iPad_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ADAL_iPad_Storyboard.storyboard; path = lib/ADALiOS/ADALiOS/ADAL_iPad_Storyboard.storyboard; sourceTree = SOURCE_ROOT; };
-		D942210C19E82EB800F0D350 /* ADAL_iPhone_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ADAL_iPhone_Storyboard.storyboard; path = lib/ADALiOS/ADALiOS/ADAL_iPhone_Storyboard.storyboard; sourceTree = SOURCE_ROOT; };
 		D94EB03719F6DDB600137259 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D94EB03819F6DDB600137259 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		D94EB03A19F6DDB600137259 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -82,6 +49,12 @@
 		D94EB04119F6DDB600137259 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		D94EB04219F6DDB600137259 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		D94EB04B19F6DE1200137259 /* ic_launcher-web.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_launcher-web.png"; sourceTree = "<group>"; };
+		D9825E541A0B9B4D002A9E75 /* ADAL_iPad_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ADAL_iPad_Storyboard.storyboard; path = "O365-Files-App/ADALiOSBundle/ADAL_iPad_Storyboard.storyboard"; sourceTree = SOURCE_ROOT; };
+		D9825E551A0B9B4D002A9E75 /* ADAL_iPhone_Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = ADAL_iPhone_Storyboard.storyboard; path = "O365-Files-App/ADALiOSBundle/ADAL_iPhone_Storyboard.storyboard"; sourceTree = SOURCE_ROOT; };
+		D9825E561A0B9B4D002A9E75 /* ADALiOSBundle-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ADALiOSBundle-Info.plist"; path = "O365-Files-App/ADALiOSBundle/ADALiOSBundle-Info.plist"; sourceTree = SOURCE_ROOT; };
+		D9825E571A0B9B4D002A9E75 /* ADALiOSBundle-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "ADALiOSBundle-Prefix.pch"; path = "O365-Files-App/ADALiOSBundle/ADALiOSBundle-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		D9825E5A1A0B9B4D002A9E75 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = InfoPlist.strings; sourceTree = "<group>"; };
+		D9825E601A0B9BEA002A9E75 /* libPods-ADALiOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-ADALiOS.a"; path = "Pods/build/Debug-iphoneos/libPods-ADALiOS.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,13 +62,32 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D942210519E825B300F0D350 /* libADALiOS.a in Frameworks */,
+				D9825E611A0B9BEA002A9E75 /* libPods-ADALiOS.a in Frameworks */,
+				D4242A13A34EAA4306DEA25B /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		53529216DC982E3B95567E96 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9825E601A0B9BEA002A9E75 /* libPods-ADALiOS.a */,
+				38323226CD6D8D467FD218DB /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		80015D433086BD9F1DED1941 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CACCF5E6E20FBFFBB542A15B /* Pods.debug.xcconfig */,
+				8B449009C81E274090B82D6C /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D90A56E819FA747F00F4F476 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -126,7 +118,8 @@
 				D94EB03619F6DDB600137259 /* O365-Files-App */,
 				D94220FC19E8248400F0D350 /* ADALiOSBundle */,
 				D94220C719E821ED00F0D350 /* Products */,
-				D94220EF19E8246500F0D350 /* ADALiOS.xcodeproj */,
+				80015D433086BD9F1DED1941 /* Pods */,
+				53529216DC982E3B95567E96 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -138,24 +131,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D94220F019E8246500F0D350 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D94220F719E8246500F0D350 /* libADALiOS.a */,
-				D94220F919E8246500F0D350 /* ADALiOSTests.xctest */,
-				D94220FB19E8246500F0D350 /* ADALiOS.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D94220FC19E8248400F0D350 /* ADALiOSBundle */ = {
 			isa = PBXGroup;
 			children = (
-				D942210B19E82EB800F0D350 /* ADAL_iPad_Storyboard.storyboard */,
-				D942210C19E82EB800F0D350 /* ADAL_iPhone_Storyboard.storyboard */,
-				D94220FD19E8248400F0D350 /* ADALiOSBundle-Info.plist */,
-				D94220FE19E8248400F0D350 /* ADALiOSBundle-Prefix.pch */,
-				D94220FF19E8248400F0D350 /* InfoPlist.strings */,
+				D9825E541A0B9B4D002A9E75 /* ADAL_iPad_Storyboard.storyboard */,
+				D9825E551A0B9B4D002A9E75 /* ADAL_iPhone_Storyboard.storyboard */,
+				D9825E561A0B9B4D002A9E75 /* ADALiOSBundle-Info.plist */,
+				D9825E571A0B9B4D002A9E75 /* ADALiOSBundle-Prefix.pch */,
+				D9825E581A0B9B4D002A9E75 /* en.lproj */,
 			);
 			name = ADALiOSBundle;
 			path = lib/ADALiOS/ADALiOSBundle;
@@ -177,6 +160,15 @@
 			path = "O365-Files-App";
 			sourceTree = "<group>";
 		};
+		D9825E581A0B9B4D002A9E75 /* en.lproj */ = {
+			isa = PBXGroup;
+			children = (
+				D9825E591A0B9B4D002A9E75 /* InfoPlist.strings */,
+			);
+			name = en.lproj;
+			path = "O365-Files-App/ADALiOSBundle/en.lproj";
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -184,14 +176,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D94220E919E821ED00F0D350 /* Build configuration list for PBXNativeTarget "O365-Files-App" */;
 			buildPhases = (
+				9BA1FE0EC1CCD977050762C3 /* Check Pods Manifest.lock */,
 				D94220C219E821ED00F0D350 /* Sources */,
 				D94220C319E821ED00F0D350 /* Frameworks */,
 				D94220C419E821ED00F0D350 /* Resources */,
+				BD5B8B3C097F2116CE470A26 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D942210419E825A800F0D350 /* PBXTargetDependency */,
 			);
 			name = "O365-Files-App";
 			productName = "AD-Auth-iOS-App";
@@ -223,12 +216,6 @@
 			mainGroup = D94220BD19E821ED00F0D350;
 			productRefGroup = D94220C719E821ED00F0D350 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D94220F019E8246500F0D350 /* Products */;
-					ProjectRef = D94220EF19E8246500F0D350 /* ADALiOS.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D94220C519E821ED00F0D350 /* O365-Files-App */,
@@ -236,49 +223,58 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXReferenceProxy section */
-		D94220F719E8246500F0D350 /* libADALiOS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libADALiOS.a;
-			remoteRef = D94220F619E8246500F0D350 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D94220F919E8246500F0D350 /* ADALiOSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ADALiOSTests.xctest;
-			remoteRef = D94220F819E8246500F0D350 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D94220FB19E8246500F0D350 /* ADALiOS.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ADALiOS.bundle;
-			remoteRef = D94220FA19E8246500F0D350 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
-
 /* Begin PBXResourcesBuildPhase section */
 		D94220C419E821ED00F0D350 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				D94EB04419F6DDB600137259 /* LaunchScreen.xib in Resources */,
+				D9825E5E1A0B9B4D002A9E75 /* InfoPlist.strings in Resources */,
 				D94EB04719F6DDB600137259 /* Images.xcassets in Resources */,
 				D94EB04819F6DDB600137259 /* Info.plist in Resources */,
-				D942210119E8248400F0D350 /* ADALiOSBundle-Info.plist in Resources */,
-				D942210D19E82EB800F0D350 /* ADAL_iPad_Storyboard.storyboard in Resources */,
+				D9825E5D1A0B9B4D002A9E75 /* ADALiOSBundle-Info.plist in Resources */,
+				D9825E5C1A0B9B4D002A9E75 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
 				D94EB04519F6DDB600137259 /* Main.storyboard in Resources */,
 				D90A56DE19FA6FFC00F4F476 /* office365.png in Resources */,
-				D942210219E8248400F0D350 /* InfoPlist.strings in Resources */,
 				D94EB04C19F6DE1200137259 /* ic_launcher-web.png in Resources */,
-				D942210E19E82EB800F0D350 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
+				D9825E5B1A0B9B4D002A9E75 /* ADAL_iPad_Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		9BA1FE0EC1CCD977050762C3 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		BD5B8B3C097F2116CE470A26 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D94220C219E821ED00F0D350 /* Sources */ = {
@@ -296,23 +292,7 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
-/* Begin PBXTargetDependency section */
-		D942210419E825A800F0D350 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ADALiOS;
-			targetProxy = D942210319E825A800F0D350 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
 /* Begin PBXVariantGroup section */
-		D94220FF19E8248400F0D350 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D942210019E8248400F0D350 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		D94EB03919F6DDB600137259 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -327,6 +307,14 @@
 				D94EB03C19F6DDB600137259 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D9825E591A0B9B4D002A9E75 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9825E5A1A0B9B4D002A9E75 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -412,11 +400,16 @@
 		};
 		D94220EA19E821ED00F0D350 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CACCF5E6E20FBFFBB542A15B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "$(SRCROOT)/O365-Files-App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "O365-Files-App";
 			};
@@ -424,11 +417,16 @@
 		};
 		D94220EB19E821ED00F0D350 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B449009C81E274090B82D6C /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				INFOPLIST_FILE = "$(SRCROOT)/O365-Files-App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "O365-Files-App";
 			};
