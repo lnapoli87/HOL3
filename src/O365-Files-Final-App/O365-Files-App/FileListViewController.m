@@ -1,14 +1,12 @@
 #import "FileListViewController.h"
 #import "FileListCellTableViewCell.h"
-#import "office365-files-sdk/FileClient.h"
-#import "office365-base-sdk/OAuthentication.h"
-#import "office365-files-sdk/FileEntity.h"
 #import "CustomFileClient.h"
 #import "FileDetailsViewController.h"
 
 @implementation FileListViewController
 
-FileEntity* currentEntity;
+NSDateFormatter *formatter;
+MSSharePointItem* currentEntity;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,15 +23,19 @@ FileEntity* currentEntity;
     
 
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-     self.navigationController.title = @"File List";
     
-    self.files = [[NSMutableArray alloc] init];
-    currentEntity = nil;
-    
+    formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM-dd-yyyy"];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
-    [self loadData];
+    if (!self.currentFolder){
+        self.navigationController.title = @"File List";
+        [self loadData];
+    }else{
+        self.navigationController.title = self.currentFolder.name;
+        [self loadCurrentFolder];
+    }
     currentEntity = nil;
 }
 
@@ -47,21 +49,45 @@ FileEntity* currentEntity;
     spinner.hidesWhenStopped = YES;
     [spinner startAnimating];
     
-    CustomFileClient *client = [CustomFileClient getClient:self.token];
-    NSURLSessionDataTask *task = [client getFiles:@"" callback:^(NSMutableArray *files, NSError *error) {
+    MSSharePointClient *client = [CustomFileClient getClient:self.token];
+    NSURLSessionDataTask *task = [[client getfiles]read:^(NSArray<MSSharePointItem> *files, NSError *error) {
         self.files = files;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
             [spinner stopAnimating];
         });
     }];
+    
+    
     [task resume];
+}
+
+
+-(void) loadCurrentFolder{
+    //Create and add a spinner
+    double x = ((self.navigationController.view.frame.size.width) - 20)/ 2;
+    double y = ((self.navigationController.view.frame.size.height) - 150)/ 2;
+    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(x, y, 20, 20)];
+    spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:spinner];
+    spinner.hidesWhenStopped = YES;
+    [spinner startAnimating];
+    
+    MSSharePointClient *client = [CustomFileClient getClient:self.token];
+    
+    [[[[[[client getfiles] getById:self.currentFolder.id] asFolder] getchildren] read:^(NSArray<MSSharePointItem> *files, NSError *error) {
+        self.files = files;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [spinner stopAnimating];
+        });
+    }] resume];
 }
 
 
 
 -(void) viewWillDisappear:(BOOL)animated {
-    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound && !self.currentFolder) {
         [self.navigationController.navigationBar setBackgroundImage:[UIImage new]
                                                       forBarMetrics:UIBarMetricsDefault];
         self.navigationController.navigationBar.shadowImage = [UIImage new];
@@ -84,10 +110,12 @@ FileEntity* currentEntity;
     NSString* identifier = @"fileListCell";
     FileListCellTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier: identifier ];
     
-    FileEntity *file = [self.files objectAtIndex:indexPath.row];
+    MSSharePointItem *file = [self.files objectAtIndex:indexPath.row];
     
-    cell.fileName.text = file.Name;
-    cell.lastModified.text = [NSString stringWithFormat:@"Last modified on %@", [file.TimeLastModified substringToIndex:10]];
+    NSString *lastModifiedString = [formatter stringFromDate:file.dateTimeLastModified];
+    
+    cell.fileName.text = file.name;
+    cell.lastModified.text = [NSString stringWithFormat:@"Last modified on %@", lastModifiedString];
     
     return cell;
 }
@@ -95,7 +123,15 @@ FileEntity* currentEntity;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     currentEntity= [self.files objectAtIndex:indexPath.row];
     
-    [self performSegueWithIdentifier:@"detail" sender:self];
+    if ([currentEntity.type isEqualToString:@"Folder"]){
+        FileListViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"fileList"];
+        controller.token = self.token;
+        controller.currentFolder = currentEntity;
+        
+        [self.navigationController pushViewController:controller animated:YES];
+    }else{
+        [self performSegueWithIdentifier:@"detail" sender:self];
+    }
 }
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender{
     return ([identifier isEqualToString:@"detail"] && currentEntity);

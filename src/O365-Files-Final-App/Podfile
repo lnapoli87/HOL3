@@ -1,0 +1,2 @@
+pod 'ADALiOS', '~>1.0.0'
+pod 'Office365/Files', '~>0.5.4'

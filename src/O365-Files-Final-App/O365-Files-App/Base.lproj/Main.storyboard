@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AWX-YN-Gwy">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="AWX-YN-Gwy">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -140,7 +140,7 @@
                             <constraint firstItem="SlJ-C0-lTT" firstAttribute="top" secondItem="fTl-tR-rdV" secondAttribute="bottom" constant="28" id="siG-xl-JF0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="File List" id="Th6-u9-Akx"/>
+                    <navigationItem key="navigationItem" title="Title" id="LNi-44-Vuu"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="tableView" destination="fTl-tR-rdV" id="AP6-ui-zCx"/>

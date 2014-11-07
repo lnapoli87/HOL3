@@ -1,7 +1,5 @@
 #import "FileDetailsViewController.h"
 #import "CustomFileClient.h"
-#import "office365-base-sdk/HttpConnection.h"
-#import "office365-base-sdk/Credentials.h"
 
 @interface FileDetailsViewController ()
 
@@ -26,9 +24,13 @@ UIActivityIndicatorView* spinner;
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-    self.fileName.text = self.file.Name;
-    self.lastModified.text = [self.file.TimeLastModified substringToIndex:10];
-    self.created.text = [self.file.TimeCreated substringToIndex:10];
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM-dd-yyyy"];
+    
+    self.fileName.text = self.file.name;
+    self.lastModified.text = [formatter stringFromDate:self.file.dateTimeLastModified];
+    self.created.text = [formatter stringFromDate:self.file.dateTimeCreated];
 
     
     [self loadFile];
@@ -43,11 +45,31 @@ UIActivityIndicatorView* spinner;
     spinner.hidesWhenStopped = YES;
     [spinner startAnimating];
     
-    NSString *fileUrlString = self.file.Url;
+    NSString *fileUrlString = self.file.webUrl;
     
-    CustomFileClient *client = [CustomFileClient getClient:self.token];
+    MSSharePointClient *client = [CustomFileClient getClient:self.token];
     
-    NSURLSessionDataTask *task = [client download:self.file.Name callback:^(NSData *data, NSError *error) {
+    [[[[[client getfiles] getById:self.file.id] asFile] getContent:^(NSData *content, NSError *error){
+        if ( content )
+        {
+            NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString  *documentsDirectory = [paths objectAtIndex:0];
+            
+            NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,self.file.name];
+            [content writeToFile:filePath atomically:YES];
+            
+            NSURL *fileUrl = [NSURL fileURLWithPath:filePath];
+            
+            self.docInteractionController = [UIDocumentInteractionController interactionControllerWithURL:fileUrl];
+            self.docInteractionController.delegate = self;
+        }
+        
+        [spinner stopAnimating];
+    }] resume];
+    
+    
+    
+    /*NSURLSessionDataTask *task = [client download:self.file.Name callback:^(NSData *data, NSError *error) {
         if ( data )
         {
             NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -66,7 +88,7 @@ UIActivityIndicatorView* spinner;
         });
     }];
     
-    [task resume];
+    [task resume];*/
 }
 
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller

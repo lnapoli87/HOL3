@@ -1,5 +1,5 @@
+#import <office365_drive_sdk/office365_drive_sdk.h>
 #import "ViewController.h"
-#import "office365-files-sdk/FileEntity.h"
 
 @interface FileDetailsViewController : ViewController<NSURLConnectionDelegate>
 
@@ -8,7 +8,7 @@
 }
 
 @property NSString *token;
-@property FileEntity *file;
+@property MSSharePointItem *file;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *downloadButton;
 @property (nonatomic, strong) UIDocumentInteractionController *docInteractionController;
 @property (weak, nonatomic) IBOutlet UILabel *fileName;
