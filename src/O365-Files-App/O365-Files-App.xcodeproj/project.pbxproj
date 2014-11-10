@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D00AC131A105527009BD104 /* Auth.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D00AC121A105527009BD104 /* Auth.plist */; };
 		D4242A13A34EAA4306DEA25B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 38323226CD6D8D467FD218DB /* libPods.a */; };
 		D90A56DE19FA6FFC00F4F476 /* office365.png in Resources */ = {isa = PBXBuildFile; fileRef = D90A56DD19FA6FFC00F4F476 /* office365.png */; };
 		D90A56E419FA73F100F4F476 /* FileListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D90A56E319FA73F100F4F476 /* FileListViewController.m */; };
@@ -30,6 +31,7 @@
 /* Begin PBXFileReference section */
 		38323226CD6D8D467FD218DB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B449009C81E274090B82D6C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		8D00AC121A105527009BD104 /* Auth.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Auth.plist; sourceTree = "<group>"; };
 		CACCF5E6E20FBFFBB542A15B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		D90A56DD19FA6FFC00F4F476 /* office365.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = office365.png; sourceTree = "<group>"; };
 		D90A56E219FA73F100F4F476 /* FileListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileListViewController.h; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				D94EB03B19F6DDB600137259 /* Main.storyboard */,
 				D94EB03E19F6DDB600137259 /* Images.xcassets */,
 				D94EB03F19F6DDB600137259 /* Info.plist */,
+				8D00AC121A105527009BD104 /* Auth.plist */,
 				D94EB04019F6DDB600137259 /* main.m */,
 			);
 			path = "O365-Files-App";
@@ -232,6 +235,7 @@
 				D9825E5E1A0B9B4D002A9E75 /* InfoPlist.strings in Resources */,
 				D94EB04719F6DDB600137259 /* Images.xcassets in Resources */,
 				D94EB04819F6DDB600137259 /* Info.plist in Resources */,
+				8D00AC131A105527009BD104 /* Auth.plist in Resources */,
 				D9825E5D1A0B9B4D002A9E75 /* ADALiOSBundle-Info.plist in Resources */,
 				D9825E5C1A0B9B4D002A9E75 /* ADAL_iPhone_Storyboard.storyboard in Resources */,
 				D94EB04519F6DDB600137259 /* Main.storyboard in Resources */,
