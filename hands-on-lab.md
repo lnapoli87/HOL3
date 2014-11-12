@@ -1,4 +1,4 @@
-Module XX: *Manage Lists in a O365 tenant with iOS*
+Module XX: *Manage Files in a O365 tenant with iOS*
 ==========================
 
 ##Overview
@@ -16,14 +16,15 @@ The lab lets students use an AzureAD account to manage files in a O365 Sharepoin
 - XCode developer tools (it will install git integration from XCode and the terminal)
 - You must have a Windows Azure subscription to complete this lab.
 - You must have completed Module 04 and linked your Azure subscription with your O365 tenant.
+- You must have Cocoapods dependencies manager already installed on the Mac. (cocoapods.org)
 
 ##Exercises
 
 The hands-on lab includes the following exercises:
 
 - [Add O365 iOS files sdk library to the project](#exercise1)
-- [Create a Client class for retrieve information and download files](#exercise2)
-- [Connect actions in the view to CustomFileClient class](#exercise3)
+- [Create a FileClient to get access to sharepoint](#exercise2)
+- [Connect actions in the view to the Office365-Files-sdk](#exercise3)
 
 <a name="exercise1"></a>
 ##Exercise 1: Add O365 iOS files sdk library to a project
@@ -31,17 +32,13 @@ In this exercise you will use an existing application with the AzureAD authentic
 and create a client class with empty methods in it to handle the requests to the Sharepoint tenant.
 
 ###Task 1 - Open the Project
-01. Download the starting point App:
+01. Clone this git repository in your machine
 
-    ```
-    git clone 
-    ```
+02. Open the **.xcworkspace** file in **src/O365-Files-App/**
 
-02. Open the **.xcodeproj** file in the O365-Files-App
+03. Find and Open the **Auth.plist**
 
-03. Find and Open the **ViewController.m** class under **O365-lists-app/controllers/login/**
-
-04. Fill the AzureAD account settings in the **viewDidLoad** method
+04. Fill the AzureAD account settings
     
     ![](img/fig.01.png)
 
@@ -63,50 +60,30 @@ and create a client class with empty methods in it to handle the requests to the
     ![](img/fig.02.png)
 
 ###Task 2 - Importing the library
-01. Download a copy of the library using the terminal:
+01. On Finder, open the **Podfile** file under the root folder of the project and add the line:
 
     ```
-    git clone 
+    pod 'Office365/Files', '~>0.5.4'
     ```
 
-02. Open the downloaded folder and copy **office365-files-sdk** folder under **Sdk-ObjectiveC**. Paste it in a lib folder inside our project path.
+02. Open a Terminal and navigate to the root folder of the project. Execute the following:
 
-    ![](img/fig.03.png)
+    ```
+    pod install
+    ```
 
-03. Drag the **office365-files-sdk.xcodeproj** file into XCode under our application project.
-    
-    ![](img/fig.04.png)
+03. Go to project settings selecting the first file from the files explorer. Then click on **Build Phases** section.
 
-04. Repeat steps 02 and 03 with **office365-base-sdk**
-
-05. Go to project settings selecting the first file from the files explorer. Then click on **Build Phases** and add an entry in the **Target Dependencies** section.
-
-    ![](img/fig.05.png)
-
-06. Select the **office365-files-sdk** and **office365-base-sdk** library dependencies.
-
-    ![](img/fig.06.png)
-
-07. Under **Link Binary with Libraries** add an entry pointing to **office365-base-sdk.a** and **office365-list-sdk.a** files
+07. Under **Link Binary with Libraries** add an entry pointing to **office365-list-sdk.a** file
 
     ![](img/fig.07.png)
-
-09. Now delete **ADALiOS.xcodeproj** from the project and select **Remove Reference** 
-    
-    ```
-    This step avoids conflicts because office365-base-sdk already has ADALiOS 
-    and is not necesary to have the library added twice
-    ```    
-
-    ![](img/fig.08.png)
 
 08. Build and Run the application to check everything is ok.
 
     ![](img/fig.09.png)
 
 <a name="exercise2"></a>
-##Exercise 2: Create a Client class for retrieve information and download files
-In this exercise you will create a client class for operations related to Files. This class will connect to the **office365-files-sdk**, and will be subclass of **FileClient**.
+##Exercise 2: Create a FileClient to get access to sharepoint
 
 ###Task 1 - Create a client class to connect to the o365-files-sdk
 
@@ -114,7 +91,7 @@ In this exercise you will create a client class for operations related to Files.
 
     ![](img/fig.10.png)
 
-03. In this section, configure the new class giving it a name (**CustomFileClient**), and make it a subclass of **ListClient**. Make sure that the language dropdown is set with **Objective-C** because our o365-lists library is written in that programming language. Finally click on **Next**.
+03. In this section, configure the new class giving it a name (**CustomFileClient**), and make it a subclass of **NSObject**. Make sure that the language dropdown is set with **Objective-C** because our o365-lists library is written in that programming language. Finally click on **Next**.
 
     ![](img/fig.11.png)    
 
@@ -122,119 +99,47 @@ In this exercise you will create a client class for operations related to Files.
 
     ![](img/fig.12.png)
 
-05. Build the Project and you will see one error. To fix it, change the import sentence On **CustomFileClient.h**.
-
-    From :
-    ```
-    #import "FileClient.h"
-    ```
-
-    To:
-    ```
-    #import <office365-files-sdk/FileClient.h>
-    ```
-
-08. Re-build the project and check everything is ok.
-
-
-
-###Task 2 - Add CustomFileClient methods
-
-01. Open the **CustomFileClient.h** class and then add the following between **@interface** and **@end**
+05. Open the **CustomFileClient.h** and add the header for the **getClient** method
 
     ```
-    - (NSURLSessionDataTask *)getFiles:(NSString *)folder callback :(void (^)(NSMutableArray *files, NSError *))callback;
-    - (NSURLSessionDataTask *)download:(NSString *)fileName callback :(void (^)(NSData *data, NSError *error))callback;
-    +(FileClient*)getClient:(NSString *) token;
+    +(MSSharePointClient*)getClient:(NSString *) token;
     ```
 
-02. Add the body of each method in the **CustomFileClient.m** file.
+    Add the import sentence
+    ```
+    #import <office365_drive_sdk/office365_drive_sdk.h>
+    ```
 
-    Get Files
+06. In **CustomFileClient.m** add the method body:
+
     ```
     const NSString *apiUrl = @"/_api/files";
 
-- (NSURLSessionDataTask *)getFiles:(NSString *)folder callback :(void (^)(NSMutableArray *files, NSError *))callback{
++(MSSharePointClient*)getClient:(NSString *) token{
+    NSString *url = [NSString alloc];
+    NSString* plistPath = [[NSBundle mainBundle] pathForResource:@"Auth" ofType:@"plist"];
+    url = [[NSDictionary dictionaryWithContentsOfFile:plistPath] objectForKey:@"o365SharepointTenantUrl"];
     
-    NSString *url;
+    MSDefaultDependencyResolver* resolver = [MSDefaultDependencyResolver alloc];
+    MSOAuthCredentials* credentials = [MSOAuthCredentials alloc];
+    [credentials addToken: token];
     
-    if(folder == nil){
-        url = [NSString stringWithFormat:@"%@%@", self.Url , apiUrl];
-    }
-    else{
-        url = [NSString stringWithFormat:@"%@%@", self.Url , apiUrl, [folder urlencode]];
-    }
+    MSCredentialsImpl* credentialsImpl = [MSCredentialsImpl alloc];
     
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential url:url];
+    [credentialsImpl setCredentials:credentials];
+    [resolver setCredentialsFactory:credentialsImpl];
     
-    NSString *method = (NSString*)[[Constants alloc] init].Method_Get;
-    
-    return [connection execute:method callback:^(NSData  *data, NSURLResponse *reponse, NSError *error) {
-        NSMutableArray *array = [NSMutableArray array];
-        
-        if(error == nil){
-            array = [self parseData : data];
-        }
-        
-        callback(array, error);
-    }];
+    return [[MSSharePointClient alloc] initWitUrl:[url stringByAppendingString:@"/_api/v1.0/me"] dependencyResolver:resolver];
 }
     ```
-
-    Download File
-    ```
-- (NSURLSessionDataTask *)download:(NSString *)fileName callback :(void (^)(NSData *data, NSError *error))callback{
-    
-    NSString *url = [NSString stringWithFormat:@"%@%@('%@')/download", self.Url , apiUrl, [fileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-
-    HttpConnection *connection = [[HttpConnection alloc] initWithCredentials:self.Credential url:url ];
-
-    NSString *method = (NSString*)[[Constants alloc] init].Method_Get;
-
-    return [connection execute:method callback:^(NSData  *data, NSURLResponse *reponse, NSError *error) {
-        callback(data, error);
-    }];
-}
-    ```
-
-    
-03. Add the **getClient** class method
-
-    ```
-    +(CustomFileClient*)getClient:(NSString *) token{
-    OAuthentication* authentication = [OAuthentication alloc];
-    [authentication setToken:token];
-    
-    return [[CustomFileClient alloc] initWithUrl:@"https://xxx.xxx/xxx"
-                               credentials: authentication];
-    }
-    ```
-
-    ```
-    Make sure to change https://xxx.xxx/xxx with the Resource url in the 
-    initWithUrl:credentials: method.
-    ```
-
-04. Add the following import sentences:
-
-    ```
-    #import "office365-base-sdk/NSString+NSStringExtensions.h"
-    #import "office365-base-sdk/HttpConnection.h"
-    #import "office365-base-sdk/Constants.h"
-    #import "office365-base-sdk/OAuthentication.h"
-    ```
-
-05. Build the project and check everything is ok.
-
 
 <a name="exercise3"></a>
-##Exercise 3: Connect actions in the view to CustomFileClient class
-In this exercise you will navigate in every controller class of the project, in order to connect each action (from buttons, lists and events) with one CustomFileClient operation.
+##Exercise 3: Connect actions in the view to the Office365-Files-sdk
+In this exercise you will navigate in every controller class of the project, in order to connect each action (from buttons, lists and events) with one Office365-Files-sdk command.
 
 ```
 The Application has every event wired up with their respective controller classes. 
-We need to connect this event methods to our CustomFileClient class 
-in order to have access to the o365-files-sdk.
+We need to connect this event methods to the o365-files-sdk.
 ```
 
 ###Task1 - Wiring up FileListView
@@ -247,7 +152,12 @@ in order to have access to the o365-files-sdk.
 
     Also add an instance variable in the **FileListViewController.m** to hold the current selection
     ```
-    FileEntity* currentEntity;
+    MSSharePointItem* currentEntity;
+    ```
+
+    And the import sentence
+    ```
+    #import <office365_drive_sdk/office365_drive_sdk.h>
     ```
 
 
@@ -264,26 +174,57 @@ in order to have access to the o365-files-sdk.
     spinner.hidesWhenStopped = YES;
     [spinner startAnimating];
     
-    CustomFileClient *client = [CustomFileClient getClient:self.token];
-    NSURLSessionDataTask *task = [client getFiles:@"" callback:^(NSMutableArray *files, NSError *error) {
+    MSSharePointClient *client = [CustomFileClient getClient:self.token];
+    NSURLSessionDataTask *task = [[client getfiles]read:^(NSArray<MSSharePointItem> *files, NSError *error) {
         self.files = files;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
             [spinner stopAnimating];
         });
     }];
+    
+    
     [task resume];
 }
     ```
+    Add the **loadCurrentFolder** method
+    ```
+    -(void) loadCurrentFolder{
+    //Create and add a spinner
+    double x = ((self.navigationController.view.frame.size.width) - 20)/ 2;
+    double y = ((self.navigationController.view.frame.size.height) - 150)/ 2;
+    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(x, y, 20, 20)];
+    spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:spinner];
+    spinner.hidesWhenStopped = YES;
+    [spinner startAnimating];
+    
+    MSSharePointClient *client = [CustomFileClient getClient:self.token];
+    
+    [[[[[[client getfiles] getById:self.currentFolder.id] asFolder] getchildren] read:^(NSArray<MSSharePointItem> *files, NSError *error) {
+        self.files = files;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+            [spinner stopAnimating];
+        });
+    }] resume];
+}
+    ```
 
-    Now call it from the **viewWillAppear** method. Also add the initialization for **currentEntity** and **files**
+    Now call them from the **viewWillAppear** method. Also add the initialization for **currentEntity** and **files**
     ```
     - (void)viewWillAppear:(BOOL)animated{
+    if (!self.currentFolder){
+        self.navigationController.title = @"File List";
+        [self loadData];
+    }else{
+        self.navigationController.title = self.currentFolder.name;
+        [self loadCurrentFolder];
+    }
     currentEntity = nil;
-    self.files = [[NSMutableArray alloc] init];
-    [self loadData];
     }
     ```
+
 
 03. Add the table methods:
 
@@ -294,20 +235,30 @@ in order to have access to the o365-files-sdk.
 
     - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
         NSString* identifier = @"fileListCell";
-        FileListCellTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier: identifier ];
-        
-        FileEntity *file = [self.files objectAtIndex:indexPath.row];
-        
-        cell.fileName.text = file.Name;
-        cell.lastModified.text = [NSString stringWithFormat:@"Last modified on %@", [file.TimeLastModified substringToIndex:10]];
-        
-        return cell;
+    FileListCellTableViewCell *cell =[tableView dequeueReusableCellWithIdentifier: identifier ];
+    
+    MSSharePointItem *file = [self.files objectAtIndex:indexPath.row];
+    
+    NSString *lastModifiedString = [formatter stringFromDate:file.dateTimeLastModified];
+    
+    cell.fileName.text = file.name;
+    cell.lastModified.text = [NSString stringWithFormat:@"Last modified on %@", lastModifiedString];
+    
+    return cell;
     }
 
     - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
         currentEntity= [self.files objectAtIndex:indexPath.row];
+    
+    if ([currentEntity.type isEqualToString:@"Folder"]){
+        FileListViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"fileList"];
+        controller.token = self.token;
+        controller.currentFolder = currentEntity;
         
+        [self.navigationController pushViewController:controller animated:YES];
+    }else{
         [self performSegueWithIdentifier:@"detail" sender:self];
+    }
     }
     ```
 
@@ -327,18 +278,7 @@ in order to have access to the o365-files-sdk.
     }
     ```
 
-05. Add the needed import sentences:
-
-    ```
-    #import "FileListCellTableViewCell.h"
-    #import "office365-files-sdk/FileClient.h"
-    #import "office365-base-sdk/OAuthentication.h"
-    #import "office365-files-sdk/FileEntity.h"
-    #import "CustomFileClient.h"
-    #import "FileDetailsViewController.h"
-    ```
-
-06. Build and Run the application. Check everything is ok. Now you will be able to se the Files list from the O365 Sharepoint tenant
+05. Build and Run the application. Check everything is ok. Now you will be able to se the Files list from the O365 Sharepoint tenant and navigate the folders
 
     ![](img/fig.13.png)
 
@@ -358,52 +298,49 @@ in order to have access to the o365-files-sdk.
 
     ```
     @property NSString *token;
-    @property FileEntity *file;
+    @property MSSharePointItem *file;
     @property (nonatomic, strong) UIDocumentInteractionController *docInteractionController;
     ```
 
     Add the import sentence:
     ```
-    #import "office365-files-sdk/FileEntity.h"
+    #import "CustomFileClient.h"
     ```    
 
 03. Open the **FilesDetailsViewController.m** class implementation and add the **loadFile** method
 
     ```
         - (void) loadFile{
-        double x = ((self.navigationController.view.frame.size.width) - 20)/ 2;
-        double y = ((self.navigationController.view.frame.size.height) - 150)/ 2;
-        spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(x, y, 20, 20)];
-        spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
-        [self.view addSubview:spinner];
-        spinner.hidesWhenStopped = YES;
-        [spinner startAnimating];
+    double x = ((self.navigationController.view.frame.size.width) - 20)/ 2;
+    double y = ((self.navigationController.view.frame.size.height) - 150)/ 2;
+    spinner = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(x, y, 20, 20)];
+    spinner.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+    [self.view addSubview:spinner];
+    spinner.hidesWhenStopped = YES;
+    [spinner startAnimating];
+    
+    NSString *fileUrlString = self.file.webUrl;
+    
+    MSSharePointClient *client = [CustomFileClient getClient:self.token];
+    
+    [[[[[client getfiles] getById:self.file.id] asFile] getContent:^(NSData *content, NSError *error){
+        if ( content )
+        {
+            NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString  *documentsDirectory = [paths objectAtIndex:0];
+            
+            NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,self.file.name];
+            [content writeToFile:filePath atomically:YES];
+            
+            NSURL *fileUrl = [NSURL fileURLWithPath:filePath];
+            
+            self.docInteractionController = [UIDocumentInteractionController interactionControllerWithURL:fileUrl];
+            self.docInteractionController.delegate = self;
+        }
         
-        NSString *fileUrlString = self.file.Url;
-        
-        CustomFileClient *client = [CustomFileClient getClient:self.token];
-        
-        NSURLSessionDataTask *task = [client download:self.file.Name callback:^(NSData *data, NSError *error) {
-            if ( data )
-            {
-                NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-                NSString  *documentsDirectory = [paths objectAtIndex:0];
-                
-                NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,self.file.Name];
-                [data writeToFile:filePath atomically:YES];
-                
-                NSURL *fileUrl = [NSURL fileURLWithPath:filePath];
-                
-                self.docInteractionController = [UIDocumentInteractionController interactionControllerWithURL:fileUrl];
-                self.docInteractionController.delegate = self;
-            }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [spinner stopAnimating];
-            });
-        }];
-        
-        [task resume];
-    }
+        [spinner stopAnimating];
+    }] resume];
+}
     ```
 
     Also add the import sentence to the client class:

@@ -66,29 +66,6 @@ UIActivityIndicatorView* spinner;
         
         [spinner stopAnimating];
     }] resume];
-    
-    
-    
-    /*NSURLSessionDataTask *task = [client download:self.file.Name callback:^(NSData *data, NSError *error) {
-        if ( data )
-        {
-            NSArray       *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-            NSString  *documentsDirectory = [paths objectAtIndex:0];
-            
-            NSString  *filePath = [NSString stringWithFormat:@"%@/%@", documentsDirectory,self.file.Name];
-            [data writeToFile:filePath atomically:YES];
-            
-            NSURL *fileUrl = [NSURL fileURLWithPath:filePath];
-            
-            self.docInteractionController = [UIDocumentInteractionController interactionControllerWithURL:fileUrl];
-            self.docInteractionController.delegate = self;
-        }
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [spinner stopAnimating];
-        });
-    }];
-    
-    [task resume];*/
 }
 
 - (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller
