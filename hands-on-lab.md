@@ -34,15 +34,21 @@ and create a client class with empty methods in it to handle the requests to the
 ###Task 1 - Open the Project
 01. Clone this git repository in your machine
 
-02. Open the **.xcworkspace** file in **src/O365-Files-App/**
+02. Open a Terminal and navigate to the root folder of the project. Execute the following:
 
-03. Find and Open the **Auth.plist**
+    ```
+    pod install
+    ```
 
-04. Fill the AzureAD account settings
+03. Open the **.xcworkspace** file in **src/O365-Files-App/**
+
+04. Find and Open the **Auth.plist**
+
+05. Fill the AzureAD account settings
     
     ![](img/fig.01.png)
 
-03. Build and Run the project in an iOS Simulator to check the views
+06. Build and Run the project in an iOS Simulator to check the views
 
     ```
     Application:
